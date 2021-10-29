@@ -7,7 +7,7 @@
 
 import java.util.*;
 
-public class SeatingManagement {
+class SeatingManagement {
 
 	public static final int NUMBER_OF_TABLES = 20;
 
@@ -25,7 +25,7 @@ public class SeatingManagement {
 		}
 	}
 
-	public int getAvailTable(int seatsNeeded) {
+	int getAvailTable(int seatsNeeded) {
 
 		for(Table t : myTables){
 			if (t.getStatus() == Status.EMPTY && t.getNumOfSeats() >= seatsNeeded)
@@ -34,19 +34,19 @@ public class SeatingManagement {
 		return -1; //if no available table found
 	}
 
-	public void reserveATable(int tID) {
+	void reserveATable(int tID) {
 		myTables.get(tID-1).setStatus(Status.RESERVED); //set status of table of tID from empty to reserved
 	}
 
-	public void assignTable(int tID) {
+	void assignTable(int tID) {
 		myTables.get(tID-1).setStatus(Status.ASSIGNED); //set status of table of tID from reserved to assigned
 	}
 
-	public void unassignTable(int tID) {
+	void unassignTable(int tID) {
 		myTables.get(tID-1).setStatus(Status.EMPTY); //set status of table of tID from assigned/reserved to empty
 	}
 
-	public Table getTable(int tID){
+	Table getTable(int tID){
 		return myTables.get(tID-1);
 	}
 }
