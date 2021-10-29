@@ -10,8 +10,6 @@ class StaffRoster {
 	}
 	
 	void removeStaff(int ID) {
-		for (int i = 0; i < availStaff.size(); i++) {
-			if (availStaff.get(i).getemployeeID() == ID) availStaff.remove(i);
-		}
+		availStaff.removeIf(staff -> staff.getEmployeeID() == ID);
 	}
 }
