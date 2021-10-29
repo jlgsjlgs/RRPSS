@@ -7,11 +7,11 @@ class Order {
 	private ArrayList<MenuItem> myOrder;
 	private int tableID;
 
-	Order(int orderID,Staff staff,ArrayList<MenuItem> item,int tableID){
+	Order(int orderID, Staff staff, int tableID){
 		this.orderID = orderID;
 		this.staff = staff;
-		this.myOrder = item;
 		this.tableID = tableID;
+		myOrder = null;
 	}
 
 	int getOrderID() {
@@ -39,13 +39,12 @@ class Order {
 	}
 
 	void printOrder() {
-		// TODO - implement Order.printOrder
-		throw new UnsupportedOperationException();
+		for(MenuItem orderItem : myOrder)
+			System.out.println(orderItem);
 	}
 
 	void totalPrice() {
-		// TODO - implement Order.totalPrice
-		throw new UnsupportedOperationException();
+		// to do
 	}
 
 	void isMember() {
