@@ -1,2 +1,2 @@
-public class Desssert extends MenuItem {
+class Desssert extends MenuItem {
 }
