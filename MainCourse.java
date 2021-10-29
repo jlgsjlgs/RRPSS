@@ -1,2 +1,2 @@
-public class MainCourse extends MenuItem {
+class MainCourse extends MenuItem {
 }
