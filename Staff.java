@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Staff {
+class Staff {
 
 	private String name;
 	private String gender;
