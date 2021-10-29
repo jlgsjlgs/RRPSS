@@ -1,5 +1,3 @@
-package CZ2002_OOP_Proj;
-
 import java.util.Scanner;
 
 class Staff {
