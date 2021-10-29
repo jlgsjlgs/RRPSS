@@ -15,7 +15,9 @@ public class UI {
         mymenu.getMains();
         mymenu.getDrinks();
         mymenu.getDesserts();
-        mymenu.addItem();
+        mymenu.updateItem();
         mymenu.getMains();
+        mymenu.getDrinks();
+        mymenu.getDesserts();
     }
 }
