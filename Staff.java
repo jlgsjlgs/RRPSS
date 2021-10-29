@@ -7,14 +7,14 @@ public class Staff {
 	private int employeeID;
 	private StaffRole jobTitle;
         
-        public Staff(String name, String gender, int ID){
+        Staff(String name, String gender, int ID){
             this.name = name;
             this.gender = gender;
             this.employeeID = ID;
         }
 
         
-	public void setJobTitle() {
+	void setJobTitle() {
             Scanner sc = new Scanner(System.in);
             
             System.out.println("Job titles:");
@@ -36,19 +36,19 @@ public class Staff {
             }
         }
 
-	public String getName() {
+	String getName() {
 		return this.name;
 	}
 
-	public String getGender() {
+	String getGender() {
 		return this.gender;
 	}
 
-	public int getEmployeeID() {
+	int getEmployeeID() {
 		return this.employeeID;
 	}
 
-	public StaffRole getJobTitle() {
+	StaffRole getJobTitle() {
 		return this.jobTitle;
 	}
 
