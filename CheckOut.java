@@ -1,4 +1,4 @@
-public class CheckOut {
+class CheckOut {
 
 	void getBill() {
 		// TODO - implement CheckOut.getBill
