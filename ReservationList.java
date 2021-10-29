@@ -1,20 +1,26 @@
-class ReservationList {
+public class ReservationList {
 
-	private Reservation resList;
+	private static ArrayList <Reservation> resList = new ArrayList <Reservation>();
+	private static nextrID = 1;
 
-	Reservation getResList() {
-		// TODO - implement ReservationList.getResList
-		throw new UnsupportedOperationException();
+	static Reservation getResList() {
+		return resList;
 	}
 
-	void addReservation() {
-		// TODO - implement ReservationList.addReservation
-		throw new UnsupportedOperationException();
+	static void addReservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem) {
+		resList.add(new Reservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem, nextrID));
+		nextrID++;
 	}
 
-	void removeReservation() {
-		// TODO - implement ReservationList.removeReservation
-		throw new UnsupportedOperationException();
+	static void removeReservation(long rID) {
+		resList.removeIf(res -> (res.getrID() == rID));
 	}
 
+	Reservation getReservation(long rID){
+		for (Resevation res : resList){
+			if (res.getrID() == rID)
+				return res;
+		}
+		return null;
+	}
 }
