@@ -2,17 +2,17 @@ public class ReservationList {
 
 	private Reservation resList;
 
-	public Reservation getResList() {
+	Reservation getResList() {
 		// TODO - implement ReservationList.getResList
 		throw new UnsupportedOperationException();
 	}
 
-	public void addReservation() {
+	void addReservation() {
 		// TODO - implement ReservationList.addReservation
 		throw new UnsupportedOperationException();
 	}
 
-	public void removeReservation() {
+	void removeReservation() {
 		// TODO - implement ReservationList.removeReservation
 		throw new UnsupportedOperationException();
 	}
