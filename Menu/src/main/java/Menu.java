@@ -81,7 +81,7 @@ public class Menu {
         System.out.println("3. Price");
     }
     
-    public void addItem(){
+    public void addMenuItem(){
         Scanner sc = new Scanner(System.in);
         
         System.out.println("What type of item do you want to add?");
@@ -109,7 +109,7 @@ public class Menu {
         }      
     }
     
-    public void updateItem(){
+    public void updateMenuItem(){
         Scanner sc = new Scanner(System.in);
         
         System.out.println("What type of item do you want to update?");
@@ -225,6 +225,238 @@ public class Menu {
         }
     }
     
+    public void deleteMenuItem(){
+        Scanner sc = new Scanner(System.in);
+        Integer toRemove;
+        
+        System.out.println("What type of item do you want to delete?");
+        showItemTypes();
+        Integer userInput = Integer.valueOf(sc.nextLine());
+        switch (userInput){
+            case 1:
+                if (this.mains.size() == 0){
+                    System.out.println("No items to remove!");
+                    break;
+                }
+                System.out.println("Which item do you want to remove?");
+                getMains();
+                toRemove = Integer.valueOf(sc.nextLine());
+                if (toRemove < 1 || toRemove > this.mains.size()){
+                    System.out.println("Invalid item to remove!");
+                    break;
+                }
+                this.mains.remove(toRemove-1);
+                break;
+            case 2:
+                if (this.drinks.size() == 0){
+                    System.out.println("No items to remove!");
+                    break;
+                }
+                System.out.println("Which item do you want to remove?");
+                getDrinks();
+                toRemove = Integer.valueOf(sc.nextLine());
+                if (toRemove < 1 || toRemove > this.drinks.size()){
+                    System.out.println("Invalid item to remove!");
+                    break;
+                }
+                this.drinks.remove(toRemove-1);
+                break;
+            case 3:
+                if (this.desserts.size() == 0){
+                    System.out.println("No items to remove!");
+                    break;
+                }
+                System.out.println("Which item do you want to remove?");
+                getDesserts();
+                toRemove = Integer.valueOf(sc.nextLine());
+                if (toRemove < 1 || toRemove > this.desserts.size()){
+                    System.out.println("Invalid item to remove!");
+                    break;
+                }
+                this.desserts.remove(toRemove-1);
+                break;
+            default:
+                System.out.println("Not a valid item type!");
+        }
+    }
+    
+    public void addPromotionalItem(){
+        Scanner sc = new Scanner(System.in);
+        int userchoice;
+        
+        System.out.println("Enter name for promotion: ");
+        String promoname = sc.nextLine();
+        Promotional temp = new Promotional(promoname);
+        
+        System.out.println("Add main course to the promotion, input 0 to exit");
+        getMains();
+        while(true){
+            userchoice = Integer.valueOf(sc.nextLine());
+            
+            if (userchoice == 0){
+                break;
+            }
+            
+            if (userchoice < 0 || userchoice > this.mains.size()){
+                System.out.println("Invalid choice!");
+            } else {
+                temp.addItem(this.mains.get(userchoice-1));
+            }
+        }
+        
+        System.out.println("Add drink to the promotion, input 0 to exit");
+        getDrinks();
+        while(true){
+            userchoice = Integer.valueOf(sc.nextLine());
+            
+            if (userchoice == 0){
+                break;
+            }
+            
+            if (userchoice < 0 || userchoice > this.drinks.size()){
+                System.out.println("Invalid choice!");
+            } else {
+                temp.addItem(this.drinks.get(userchoice-1));
+            }
+        }
+        
+        System.out.println("Add dessert to the promotion, input 0 to exit");
+        getDesserts();
+        while(true){
+            userchoice = Integer.valueOf(sc.nextLine());
+            
+            if (userchoice == 0){
+                break;
+            }
+            
+            if (userchoice < 0 || userchoice > this.desserts.size()){
+                System.out.println("Invalid choice!");
+            } else {
+                temp.addItem(this.desserts.get(userchoice-1));
+            }
+        }
+        
+        temp.printItems();
+        System.out.println("Total price for promotion: " + temp.getPrice());
+        this.promotions.add(temp);
+    }
+    
+    public void updatePromotionalItem(){
+        if (this.promotions.size() == 0){
+            System.out.println("No promotions to update!");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Which promotion item do you want to update?");
+        getPromotions();
+        
+        int promonum = Integer.valueOf(sc.nextLine());
+        if (promonum < 1 || promonum > this.promotions.size()){
+            System.out.println("Invalid promotion!");
+            return;
+        }
+        
+        System.out.println("What do you want to update?");
+        System.out.println("1. Add items to promotion");
+        System.out.println("2. Remove items from promotion");
+        int userchoice = Integer.valueOf(sc.nextLine());
+        
+        switch (userchoice){
+            case 1:
+                System.out.println("Add main course to the promotion, input 0 to exit");
+                getMains();
+                while(true){
+                    userchoice = Integer.valueOf(sc.nextLine());
+
+                    if (userchoice == 0){
+                        break;
+                    }
+
+                    if (userchoice < 0 || userchoice > this.mains.size()){
+                        System.out.println("Invalid choice!");
+                    } else {
+                        this.promotions.get(promonum-1).addItem(this.mains.get(userchoice-1));
+                    }
+                }
+
+                System.out.println("Add drink to the promotion, input 0 to exit");
+                getDrinks();
+                while(true){
+                    userchoice = Integer.valueOf(sc.nextLine());
+
+                    if (userchoice == 0){
+                        break;
+                    }
+
+                    if (userchoice < 0 || userchoice > this.drinks.size()){
+                        System.out.println("Invalid choice!");
+                    } else {
+                        this.promotions.get(promonum-1).addItem(this.drinks.get(userchoice-1));
+                    }
+                }
+
+                System.out.println("Add dessert to the promotion, input 0 to exit");
+                getDesserts();
+                while(true){
+                    userchoice = Integer.valueOf(sc.nextLine());
+
+                    if (userchoice == 0){
+                        break;
+                    }
+
+                    if (userchoice < 0 || userchoice > this.desserts.size()){
+                        System.out.println("Invalid choice!");
+                    } else {
+                        this.promotions.get(promonum-1).addItem(this.desserts.get(userchoice-1));
+                    }
+                }
+                break;
+            case 2:
+                System.out.println("Input index to remove item, input 0 to exit");
+                while(true){
+                    this.promotions.get(promonum-1).printItems();
+                    userchoice = Integer.valueOf(sc.nextLine());
+                    if (userchoice == 0){
+                        break;
+                    }
+                    
+                    if (userchoice < 0 || userchoice > this.promotions.get(promonum-1).getNumOfItems()){
+                        System.out.println("Invalid input!");
+                    } else{
+                        this.promotions.get(promonum-1).removeItem(userchoice-1);
+                    }
+                }
+                break;
+            default:
+                System.out.println("Invalid choice!");
+                break;
+        } 
+        this.promotions.get(promonum-1).printItems();
+        System.out.println("Total price for promotion: " + this.promotions.get(promonum-1).getPrice());
+    }
+    
+    public void deletePromotionalItem(){
+        if (this.promotions.size() == 0){
+            System.out.println("No promotions to update!");
+            return;
+        }
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Which promotion item do you want to delete?");
+        getPromotions();
+        
+        int promonum = Integer.valueOf(sc.nextLine());
+        if (promonum < 1 || promonum > this.promotions.size()){
+            System.out.println("Invalid promotion!");
+            return;
+        } else {
+            this.promotions.remove(promonum-1);
+        }
+        getPromotions();
+    }
+    
     public void getMains(){
         int i = 1;
         System.out.println();
@@ -261,6 +493,16 @@ public class Menu {
             System.out.println("Price: " + temp.getPrice());
             System.out.println();
             i++;
+        }
+    }
+    
+    public void getPromotions(){
+        if (this.promotions.size() == 0){
+            System.out.println("No promotions found!");
+        } else {
+            for (int i =0; i<this.promotions.size(); i++){
+                System.out.println((i+1) + ". " + this.promotions.get(0).getName());
+            }
         }
     }
     

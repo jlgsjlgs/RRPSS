@@ -12,12 +12,7 @@ public class UI {
     public static void main(String args[]){
         Menu mymenu = new Menu();
         mymenu.bootup();
-        mymenu.getMains();
-        mymenu.getDrinks();
-        mymenu.getDesserts();
-        mymenu.updateItem();
-        mymenu.getMains();
-        mymenu.getDrinks();
-        mymenu.getDesserts();
+        mymenu.addPromotionalItem();
+        mymenu.deletePromotionalItem();
     }
 }
