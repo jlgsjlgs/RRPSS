@@ -4,15 +4,15 @@ public abstract class MenuItem {
 	private String description;
 	private double price;
 
-	public String getName() {
+	String getName() {
 		return this.name;
 	}
 
-	public String getDescription() {
+	String getDescription() {
 		return this.description;
 	}
 
-	public double getPrice() {
+	double getPrice() {
 		return this.price;
 	}
 
