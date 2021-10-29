@@ -12,7 +12,7 @@ class StaffRoster {
 	}
 	
 void bootup(){
-	InputStream is = StaffRoster.class.getResourceAsStream("TestStaffRoster.txt");
+	InputStream is = StaffRoster.class.getResourceAsStream("StaffNominalRoll.txt");
     Scanner filescanner = new Scanner(System.in);
     //System.out.println("File to read: ");
     String filename = "TestStaffRoster.txt";
