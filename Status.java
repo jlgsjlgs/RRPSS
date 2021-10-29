@@ -1,4 +1,4 @@
-public enum Status {
+enum Status {
 	EMPTY,
 	RESERVED,
 	ASSIGNED
