@@ -1,4 +1,4 @@
-public class Table {
+class Table {
 
 	private Order order;
 	private int tableID;
