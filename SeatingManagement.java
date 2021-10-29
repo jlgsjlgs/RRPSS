@@ -4,6 +4,7 @@
 */
 
 
+
 import java.util.*;
 
 public class SeatingManagement {
@@ -24,7 +25,7 @@ public class SeatingManagement {
 		}
 	}
 
-	int getAvailTable(int seatsNeeded) {
+	public int getAvailTable(int seatsNeeded) {
 
 		for(Table t : myTables){
 			if (t.getStatus() == Status.EMPTY && t.getNumOfSeats() >= seatsNeeded)
@@ -33,19 +34,19 @@ public class SeatingManagement {
 		return -1; //if no available table found
 	}
 
-	void reserveATable(int tID) {
+	public void reserveATable(int tID) {
 		myTables.get(tID-1).setStatus(Status.RESERVED); //set status of table of tID from empty to reserved
 	}
 
-	void assignTable(int tID) {
+	public void assignTable(int tID) {
 		myTables.get(tID-1).setStatus(Status.ASSIGNED); //set status of table of tID from reserved to assigned
 	}
 
-	void unassignTable(int tID) {
+	public void unassignTable(int tID) {
 		myTables.get(tID-1).setStatus(Status.EMPTY); //set status of table of tID from assigned/reserved to empty
 	}
 
-	Table getTable(int tID){
+	public Table getTable(int tID){
 		return myTables.get(tID-1);
 	}
 }
