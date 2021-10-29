@@ -1,3 +1,8 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner;
+
 class RRSPSS {
 
 	void addItem() {
@@ -51,8 +56,27 @@ class RRSPSS {
 	}
 
 	void createReservation() {
-		// TODO - implement RRSPSS.createReservation
-		throw new UnsupportedOperationException();
+		Scanner scan = new Scanner(System.in);
+		System.out.println("Enter date in YYYY-MM-DD format");
+		LocalDate date;
+		LocalTime time;
+		while(true){
+			try {
+				date = LocalDate.parse(scan.next());
+				break;
+			}catch (DateTimeParseException e){
+				System.out.println("Invalid date");
+			}
+		}
+		while(true){
+			try {
+				time = LocalTime.parse(scan.next());
+				break;
+			}catch (DateTimeParseException e){
+				System.out.println("Invalid date");
+			}
+		}
+		//create reservation
 	}
 
 	void checkReservationa() {
