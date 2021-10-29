@@ -5,45 +5,45 @@ public class Order {
 	private MenuItem myOrder;
 	private int tableID;
 
-	public int getOrderID() {
+	int getOrderID() {
 		return this.orderID;
 	}
 
-	public Staff getStaffName() {
+	Staff getStaffName() {
 		return this.staffName;
 	}
 
-	public Menu getMyOrder() {
+	Menu getMyOrder() {
 		// TODO - implement Order.getMyOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void getTableID() {
+	void getTableID() {
 		// TODO - implement Order.getTableID
 		throw new UnsupportedOperationException();
 	}
 
-	public Void addItemToOrder() {
+	Void addItemToOrder() {
 		// TODO - implement Order.addItemToOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void removeItemFromOrder() {
+	void removeItemFromOrder() {
 		// TODO - implement Order.removeItemFromOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void printOrder() {
+	void printOrder() {
 		// TODO - implement Order.printOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void totalPrice() {
+	void totalPrice() {
 		// TODO - implement Order.totalPrice
 		throw new UnsupportedOperationException();
 	}
 
-	public void isMember() {
+	void isMember() {
 		// TODO - implement Order.isMember
 		throw new UnsupportedOperationException();
 	}
