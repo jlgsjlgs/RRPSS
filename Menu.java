@@ -1,4 +1,4 @@
-public class Menu {
+class Menu {
 
 	private MenuItem menuItems;
 	private Promotional promotionalItems;
