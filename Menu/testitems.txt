@@ -1,0 +1,26 @@
+MainCourse
+Chicken Rice
+Delicious and savory
+5.50
+
+Drink
+Ice Lemon Tea
+Cool and refreshing
+3.50
+
+MainCourse
+Chicken Noodle
+Good Soup
+6.20
+
+Drink
+Ice Chocolate
+Pretty good
+4.20
+
+Dessert
+Ice Cream
+The Classic
+5.00
+
+END
