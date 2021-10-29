@@ -16,7 +16,9 @@ public class SeatingManagement {
 		//creation of tables + adding it to myTables arrayList
 		int paxPerTable = 2;
 		for (int i  = 0; i < NUMBER_OF_TABLES; i++){
+			
 			myTables.add(i, new Table(i+1, paxPerTable));
+
 			if((i+1) % 4 == 0)
 				paxPerTable++;
 		}
