@@ -1,8 +1,9 @@
 /* Tables are created in this class with table ID ranging from 1 - 20
 	paxPerTable ranges from 2-6
 	4 Tables for each paxPerTable size
-*/
 
+	Package level access
+*/
 
 
 import java.util.*;
@@ -15,6 +16,7 @@ class SeatingManagement {
 	
 	SeatingManagement (){
 		//creation of tables + adding it to myTables arrayList
+		
 		int paxPerTable = 2;
 		for (int i  = 0; i < NUMBER_OF_TABLES; i++){
 			
