@@ -5,30 +5,30 @@ public class Promotional {
 	private String description;
 	private double price;
 
-	public MenuItem getPromotion() {
+	MenuItem getPromotion() {
 		// TODO - implement Promotional.getPromotion
 		throw new UnsupportedOperationException();
 	}
 
-	public void addItem() {
+	void addItem() {
 		// TODO - implement Promotional.addItem
 		throw new UnsupportedOperationException();
 	}
 
-	public void removeItem() {
+	void removeItem() {
 		// TODO - implement Promotional.removeItem
 		throw new UnsupportedOperationException();
 	}
 
-	public String getName() {
+	String getName() {
 		return this.name;
 	}
 
-	public String getDescription() {
+	String getDescription() {
 		return this.description;
 	}
 
-	public double getPrice() {
+	double getPrice() {
 		return this.price;
 	}
 
