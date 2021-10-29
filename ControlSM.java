@@ -1,4 +1,4 @@
-public class ControlSM{
+class ControlSM{
 	public static void main(String[] args){
 		SeatingManagement sm = new SeatingManagement();
 		int tID;
