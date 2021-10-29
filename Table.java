@@ -5,7 +5,7 @@ public class Table {
 	private int numOfSeats;
 	private Status status;
 
-	//package access level constructor
+	//package access level constructor (input tID & seats)
 	Table(int tID, int seats){
 		tableID = tID;
 		numOfSeats = seats;
