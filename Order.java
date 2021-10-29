@@ -1,36 +1,41 @@
+import java.util.ArrayList;
+
 class Order {
 
 	private int orderID;
-	private Staff staffName;
-	private MenuItem myOrder;
+	private Staff staff;
+	private ArrayList<MenuItem> myOrder;
 	private int tableID;
+
+	Order(int orderID,Staff staff,ArrayList<MenuItem> item,int tableID){
+		this.orderID = orderID;
+		this.staff = staff;
+		this.myOrder = item;
+		this.tableID = tableID;
+	}
 
 	int getOrderID() {
 		return this.orderID;
 	}
 
-	Staff getStaffName() {
-		return this.staffName;
+	Staff getStaff() {
+		return this.staff;
 	}
 
-	Menu getMyOrder() {
-		// TODO - implement Order.getMyOrder
-		throw new UnsupportedOperationException();
+	ArrayList<MenuItem> getMyOrder() {
+		return myOrder;
 	}
 
-	void getTableID() {
-		// TODO - implement Order.getTableID
-		throw new UnsupportedOperationException();
+	int getTableID() {
+		return tableID;
 	}
 
-	Void addItemToOrder() {
-		// TODO - implement Order.addItemToOrder
-		throw new UnsupportedOperationException();
+	void addItemToOrder(MenuItem item) {
+		myOrder.add(item);
 	}
 
-	void removeItemFromOrder() {
-		// TODO - implement Order.removeItemFromOrder
-		throw new UnsupportedOperationException();
+	void removeItemFromOrder(MenuItem item) {
+		myOrder.remove(item);
 	}
 
 	void printOrder() {
