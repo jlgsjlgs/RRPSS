@@ -144,45 +144,122 @@ public class Menu {
                     System.out.println("Enter new name:");
                     newString = sc.nextLine();
                     this.mains.get(itemNumber-1).setName(newString);
+                } else if (itemPara == 2){
+                    System.out.println("Enter new description:");
+                    newString = sc.nextLine();
+                    this.mains.get(itemNumber-1).setDescription(newString);
+                } else if (itemPara == 3){
+                    System.out.println("Enter new price:");
+                    newDouble = Double.valueOf(sc.nextLine());
+                    this.mains.get(itemNumber-1).setPrice(newDouble);
                 }
-                
-                
-                
+                break;
+            case 2:
+                if (this.drinks.size() == 0){
+                    System.out.println("No such items to update!");
+                    break;
+                }
+                getDrinks();
+                System.out.println("Which item do you want to update?");
+                itemNumber = Integer.valueOf(sc.nextLine());
+                if (itemNumber < 1 || itemNumber > drinks.size()){
+                    System.out.println("Invalid item!");
+                    break;
+                }
+                System.out.println("What parameter do you want to update?");
+                showItemParameters();
+                itemPara = Integer.valueOf(sc.nextLine());
+                if (itemPara < 1 || itemPara > 3){
+                    System.out.println("Invalid parameter!");
+                    break;
+                }
+                if (itemPara == 1){
+                    System.out.println("Enter new name:");
+                    newString = sc.nextLine();
+                    this.drinks.get(itemNumber-1).setName(newString);
+                } else if (itemPara == 2){
+                    System.out.println("Enter new description:");
+                    newString = sc.nextLine();
+                    this.drinks.get(itemNumber-1).setDescription(newString);
+                } else if (itemPara == 3){
+                    System.out.println("Enter new price:");
+                    newDouble = Double.valueOf(sc.nextLine());
+                    this.drinks.get(itemNumber-1).setPrice(newDouble);
+                }
+                break;
+            case 3:
+                if (this.desserts.size() == 0){
+                    System.out.println("No such items to update!");
+                    break;
+                }
+                getDesserts();
+                System.out.println("Which item do you want to update?");
+                itemNumber = Integer.valueOf(sc.nextLine());
+                if (itemNumber < 1 || itemNumber > desserts.size()){
+                    System.out.println("Invalid item!");
+                    break;
+                }
+                System.out.println("What parameter do you want to update?");
+                showItemParameters();
+                itemPara = Integer.valueOf(sc.nextLine());
+                if (itemPara < 1 || itemPara > 3){
+                    System.out.println("Invalid parameter!");
+                    break;
+                }
+                if (itemPara == 1){
+                    System.out.println("Enter new name:");
+                    newString = sc.nextLine();
+                    this.desserts.get(itemNumber-1).setName(newString);
+                } else if (itemPara == 2){
+                    System.out.println("Enter new description:");
+                    newString = sc.nextLine();
+                    this.desserts.get(itemNumber-1).setDescription(newString);
+                } else if (itemPara == 3){
+                    System.out.println("Enter new price:");
+                    newDouble = Double.valueOf(sc.nextLine());
+                    this.desserts.get(itemNumber-1).setPrice(newDouble);
+                }
+                break;
+            default:
+                System.out.println("No such type of item!");        
         }
     }
     
     public void getMains(){
         int i = 1;
-        System.out.println("Mains in the menu");
+        System.out.println();
+        System.out.println("***Mains in the menu");
         for (MainCourse temp: mains){
             System.out.println(i + ". " + temp.getName());
-            System.out.println(temp.getDescription());
-            System.out.println(temp.getPrice());
-            System.out.println("");
+            System.out.println("Description: " + temp.getDescription());
+            System.out.println("Price : " + temp.getPrice());
+            System.out.println();
             i++;
         }
     }
     
     public void getDrinks(){
         int i = 1;
-        System.out.println("Drinks in the menu");
+        System.out.println();
+        System.out.println("***Drinks in the menu");
         for (Drink temp: drinks){
             System.out.println(i + ". " + temp.getName());
-            System.out.println(temp.getDescription());
-            System.out.println(temp.getPrice());
-            System.out.println("");
+            System.out.println("Description: " + temp.getDescription());
+            System.out.println("Price: " + temp.getPrice());
+            System.out.println();
             i++;
         }
     }
     
     public void getDesserts(){
         int i = 1;
-        System.out.println("Desserts in the menu");
+        System.out.println();
+        System.out.println("***Desserts in the menu");
         for (Dessert temp: desserts){
             System.out.println(i + ". " + temp.getName());
-            System.out.println(temp.getDescription());
-            System.out.println(temp.getPrice());
-            System.out.println("");
+            System.out.println("Description: " + temp.getDescription());
+            System.out.println("Price: " + temp.getPrice());
+            System.out.println();
             i++;
         }
     }
