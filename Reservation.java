@@ -1,23 +1,24 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class Reservation {
 
 	private String custName;
 	private LocalDate date;
 	private LocalTime time;
-	private Int pax;
+	private int pax;
 	private long contact;
 	private Boolean membership;
 
-	public Date getDate() {
-		// TODO - implement Reservation.getDate
-		throw new UnsupportedOperationException();
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public Time getTime() {
-		// TODO - implement Reservation.getTime
-		throw new UnsupportedOperationException();
+	public LocalTime getTime() {
+		return time;
 	}
 
-	public Int getPax() {
+	public int getPax() {
 		return this.pax;
 	}
 
@@ -33,9 +34,12 @@ public class Reservation {
 		return this.membership;
 	}
 
-	public Boolean checkAvailableTable() {
-		// TODO - implement Reservation.checkAvailableTable
-		throw new UnsupportedOperationException();
+	public Boolean checkAvailableTable(SeatingManagement sm,int seats) {
+		int table = sm.getAvailTable(seats);
+		if(table == -1)
+			return false;
+		sm.reserveATable(table);
+		return true;
 	}
 
 }
