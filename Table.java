@@ -13,27 +13,27 @@ public class Table {
 		order = null;
 	}
 
-	public Order getOrder() {
+	Order getOrder() {
 		return this.order;
 	}
 
-	public int getTableID() {
+	int getTableID() {
 		return this.tableID;
 	}
 
-	public int getNumOfSeats() {
+	int getNumOfSeats() {
 		return this.numOfSeats;
 	}
 
-	public Status getStatus() {
+	Status getStatus() {
 		return this.status;
 	}
 
-	public void setOrder(Order o){
+	void setOrder(Order o){
 		order = o;
 	}
 
-	public void setStatus(Status s){
+	void setStatus(Status s){
 		status = s;
 	}
 
