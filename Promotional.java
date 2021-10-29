@@ -1,4 +1,4 @@
-public class Promotional {
+class Promotional {
 
 	private MenuItem promotion;
 	private String name;
