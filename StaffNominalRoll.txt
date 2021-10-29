@@ -1,0 +1,11 @@
+Spongebob Squarepants
+Male
+Cook
+1
+
+Squidward Tentacles
+Male
+Cashier
+2
+
+END
