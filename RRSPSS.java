@@ -1,4 +1,4 @@
-public class RRSPSS {
+class RRSPSS {
 
 	void addItem() {
 		// TODO - implement RRSPSS.addItem
