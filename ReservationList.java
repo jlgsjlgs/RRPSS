@@ -1,4 +1,4 @@
-public class ReservationList {
+class ReservationList {
 
 	private Reservation resList;
 
