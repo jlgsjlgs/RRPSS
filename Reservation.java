@@ -10,31 +10,31 @@ public class Reservation {
 	private long contact;
 	private Boolean membership;
 
-	public LocalDate getDate() {
+	LocalDate getDate() {
 		return date;
 	}
 
-	public LocalTime getTime() {
+	LocalTime getTime() {
 		return time;
 	}
 
-	public int getPax() {
+	int getPax() {
 		return this.pax;
 	}
 
-	public String getCustName() {
+	String getCustName() {
 		return this.custName;
 	}
 
-	public long getContact() {
+	long getContact() {
 		return this.contact;
 	}
 
-	public Boolean getMembership() {
+	Boolean getMembership() {
 		return this.membership;
 	}
 
-	public Boolean checkAvailableTable(SeatingManagement sm,int seats) {
+	Boolean checkAvailableTable(SeatingManagement sm,int seats) {
 		int table = sm.getAvailTable(seats);
 		if(table == -1)
 			return false;
