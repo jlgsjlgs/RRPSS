@@ -1,4 +1,4 @@
-public abstract class MenuItem {
+abstract class MenuItem {
 
 	private String name;
 	private String description;
