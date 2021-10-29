@@ -1,4 +1,4 @@
-public class Order {
+class Order {
 
 	private int orderID;
 	private Staff staffName;
