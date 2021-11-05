@@ -9,10 +9,10 @@ class OrderItem{
 		itemPrice = item.getPrice();
 	}
 	
-	OrderItem(Promotional set , int q){
-		orderName = set.getName(); //name of the promotional set eg setA
+	OrderItem(Promotional item , int q){
+		orderName = item.getName();
 		quantity = q;
-		itemPrice = set.getPrice();
+		itemPrice = item.getPrice();
 	}
 	
 	void getOrderName(){
