@@ -30,9 +30,10 @@ class SeatingManagement {
 	int getAvailTable(int seatsNeeded) {
 
 		for(Table t : myTables){
-			if (t.getStatus() == Status.EMPTY && t.getNumOfSeats() >= seatsNeeded)
+			if (t.getStatus() == Status.EMPTY && t.getNumOfSeats() >= seatsNeeded){
 				return t.getTableID();
 			}
+		}
 		return -1; //if no available table found
 	}
 

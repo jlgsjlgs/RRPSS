@@ -1,8 +1,7 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.math.*;
 
-public class Promotional implements Item{
+class Promotional implements Item{
     
 	private int discount;  // discount = 30 means 30% off
     private String name;

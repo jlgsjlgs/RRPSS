@@ -12,7 +12,7 @@ class Reservation {
 	private long rID;
 	private int tID;
 
-	Reservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem, long rId){
+	Reservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem, long rId, int tID){
 		custName = name;
 		this.pax = pax;
 		contact = phoneNum;
@@ -20,6 +20,7 @@ class Reservation {
 		reservedTime = resTime;
 		membership = mem;
 		rID = rId;
+		this.tID = tID;
 	}
 
 	LocalDate getReservationDate() {
@@ -54,14 +55,14 @@ class Reservation {
 		this.tID = tID;
 	}
 
-	int allocatedReserveTable(SeatingManagement sm) { //if returns -1, no table resrved, else, reservation is successful + which table was allocated
-		int tID = sm.getAvailTable(getPax());
-		if(tID != -1)
-			sm.reserveATable(tID);
+	// int allocatedReserveTable(SeatingManagement sm) { //if returns -1, no table resrved, else, reservation is successful + which table was allocated
+	// 	int tID = sm.getAvailTable(getPax());
+	// 	if(tID != -1)
+	// 		sm.reserveATable(tID);
 			
-		else
-			System.out.println("No tables with your current pax available atm, try reserving again tomorrow or put ut child at home");
-			//also in main, delete this reservation
-		return tID;
-	}
+	// 	else
+	// 		System.out.println("No tables with your current pax available atm, try reserving again tomorrow or put ut child at home");
+	// 		//also in main, delete this reservation
+	// 	return tID;
+	// }
 }

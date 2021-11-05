@@ -29,5 +29,4 @@ class Staff {
 	int getEmployeeID() {
 		return this.employeeID;
 	}
-
 }

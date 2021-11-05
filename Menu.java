@@ -140,6 +140,7 @@ class Menu {
 	            	int itemNumber = sc.nextInt(); 
 	                if (itemNumber < 1 || itemNumber > myMenu.get("MainCourse").size()){
 	                    System.out.println("Invalid item!");
+                        i--;
 	                    break;
 	                }
 	                temp.addItem(myMenu.get("MainCourse").get(itemNumber-1));
@@ -150,6 +151,7 @@ class Menu {
 	            	itemNumber = sc.nextInt();  
 	                if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
 	                    System.out.println("Invalid item!");
+                        i--;
 	                    break;
 	                }
 	                temp.addItem(myMenu.get("Drink").get(itemNumber-1));
@@ -160,6 +162,7 @@ class Menu {
 	            	itemNumber = sc.nextInt();  
 	                if (itemNumber < 1 || itemNumber > myMenu.get("Dessert").size()){
 	                    System.out.println("Invalid item!");
+                        i--;
 	                    break;
 	                }
 	                temp.addItem(myMenu.get("Dessert").get(itemNumber-1));
@@ -190,6 +193,7 @@ class Menu {
          int itemNumber = sc.nextInt(); 
          if (itemNumber < 1 || itemNumber > promoMenu.size()){  // Pick promo item to update
              System.out.println("Invalid item!");
+             return;
          }
          Promotional toUpdate = promoMenu.get(itemNumber-1);
          // Add or Remove items from promo bundle
@@ -214,13 +218,13 @@ class Menu {
      	                }
      	                toUpdate.addItem(myMenu.get("MainCourse").get(itemNumber-1));
      	                break;
-                    	case 2:
-     	            	System.out.println("Which Drink item would you like to add?");
-     	            	getDrinks();
-     	            	itemNumber = sc.nextInt();  
-     	                if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
-     	                    System.out.println("Invalid item!");
-     	                    break;
+                    case 2:
+                        System.out.println("Which Drink item would you like to add?");
+                        getDrinks();
+                        itemNumber = sc.nextInt();  
+                        if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
+                            System.out.println("Invalid item!");
+                            break;
      	                }
      	                toUpdate.addItem(myMenu.get("Drink").get(itemNumber-1));
      	                break;
@@ -245,6 +249,7 @@ class Menu {
         		 int removeItem = sc.nextInt();
         	      if (removeItem < 1 || removeItem > toUpdate.getNumOfItems()){
 	                    System.out.println("Invalid item!");
+                        return;
 	                }
         	      toUpdate.removeItem(removeItem-1);
         	      toUpdate.printItems();
@@ -277,6 +282,7 @@ class Menu {
                 	 int removeIndex = sc.nextInt();  
                      if (removeIndex < 1 || removeIndex > promoMenu.size()){
                          System.out.println("Invalid item!");
+                         return;
                      }
                      promoMenu.remove(removeIndex-1);
     	 		 } while (continueFlag == true);
@@ -327,15 +333,17 @@ class Menu {
         }
     }
     
-    void getPromotions(){
-         if (this.promoMenu.size() == 0){
-             System.out.println("No promotions found!");
-         } else {
-             for (int i =0; i<this.promoMenu.size(); i++){
-                 System.out.println((i+1) + ". " + this.promoMenu.get(i).getName());
-             }
-         }
-     }
+    public void getPromotions(){ 
+        if (this.promoMenu.size() == 0){ 
+            System.out.println("No promotions found!"); 
+        } else { 
+            for (int i =0; i<this.promoMenu.size(); i++){ 
+                System.out.println("Combo " + (i+1) + ": "+ this.promoMenu.get(i).getName()); 
+                System.out.println("-----------------------------"); 
+                this.promoMenu.get(i).printItems(); 
+            } 
+        } 
+    }
     
     
     void showItemTypes(){

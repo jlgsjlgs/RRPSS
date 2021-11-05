@@ -16,10 +16,12 @@ class ReservationList {
 		return resList;
 	}
 
-	void addReservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem) {
-		resList.add(new Reservation(name, pax, phoneNum, resDate, resTime, mem, NEXT_RID));
+	void addReservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem, int tID) {
+		Reservation tempReservation = new Reservation(name, pax, phoneNum, resDate, resTime, mem, NEXT_RID, tID);
+		resList.add(tempReservation);
+
 		System.out.println("Please note, your reservation ID is : " + NEXT_RID);
-		NEXT_RID++;
+		NEXT_RID++;	
 	}
 
 	void removeReservation(long rID) {

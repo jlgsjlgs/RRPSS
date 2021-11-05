@@ -12,7 +12,6 @@ class Order {
 		this.orderID = orderID;
 		this.staff = staff;
 		this.tableID = tableID;
-		myOrder = null;
 	}
 
 	long getOrderID() {
@@ -29,6 +28,10 @@ class Order {
 
 	int getTableID() {
 		return tableID;
+	}
+
+	int getOrderSize(){
+		return myOrder.size();
 	}
 
 	
@@ -48,7 +51,6 @@ class Order {
 		
 		for(OrderItem oItem : myOrder){
 			if(oItem.getOrderName() == item.getName()){ //found order item
-				oItem = null; //delete item obj
 				myOrder.remove(oItem); //delete item from myOrder arraylist
 				return true;
 			}
