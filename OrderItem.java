@@ -15,11 +15,11 @@ class OrderItem{
 		itemPrice = item.getPrice();
 	}
 	
-	void getOrderName(){
+	String getOrderName(){
 		return orderName;
 	}
 
-	void getOrderQuantity(){
+	int getOrderQuantity(){
 		return quantity;
 	}
   
