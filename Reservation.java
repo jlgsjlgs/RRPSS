@@ -50,7 +50,7 @@ class Reservation {
 		return tID;
 	}
 
-	public void settID(int tID) {
+	void settID(int tID) {
 		this.tID = tID;
 	}
 
