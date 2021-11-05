@@ -349,4 +349,28 @@ class Menu {
         System.out.println("2. Description");
         System.out.println("3. Price");
     }
+
+    int getNumMains(){
+        return myMenu.get("MainCourse").size();
+    }
+
+    int getNumDrinks(){
+        return myMenu.get("Drink").size();
+    }
+
+    int getNumDessert(){
+        return myMenu.get("Dessert").size();
+    }
+
+    int getNumPromotion(){
+        return promoMenu.size();
+    }
+
+    HashMap<String, ArrayList<MenuItem>> getHashMenu(){
+        return this.myMenu;
+    }
+
+    ArrayList<Promotional> getPromoArrayList(){
+        return this.promoMenu;
+    }
 }

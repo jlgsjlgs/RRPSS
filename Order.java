@@ -2,19 +2,20 @@ import java.util.ArrayList;
 
 class Order {
 
-	private int orderID;
+	private long orderID;
 	private Staff staff;
 	private ArrayList<OrderItem> myOrder;
 	private int tableID;
 
-	Order(int orderID, Staff staff, int tableID){
+	Order(long orderID, Staff staff, int tableID){
+		this.myOrder = new ArrayList<OrderItem>();
 		this.orderID = orderID;
 		this.staff = staff;
 		this.tableID = tableID;
 		myOrder = null;
 	}
 
-	int getOrderID() {
+	long getOrderID() {
 		return this.orderID;
 	}
 
@@ -33,7 +34,7 @@ class Order {
 	
 	void addItemToOrder(Item item, int quantity) {
 		
-		for(Item oItem : myOrder){
+		for(OrderItem oItem : myOrder){
 			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
 				oItem.addMore(quantity);
 				return;

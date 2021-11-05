@@ -1,43 +1,32 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author jonat
- */
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.math.*;
 
-public class Promotional {
+public class Promotional implements Item{
     
 	private int discount;  // discount = 30 means 30% off
     private String name;
     private ArrayList<MenuItem> items;
     private double totalprice;
     
-    public Promotional(String name){
+    Promotional(String name){
     	this.discount = 20;
         this.name = name;
         this.totalprice = 0;
         this.items = new ArrayList<>();
     }
     
-    public void addItem(MenuItem item){
+    void addItem(MenuItem item){
         this.items.add(item);
         updatePrice();
     }
     
-    public void removeItem(int num){
+    void removeItem(int num){
         this.items.remove(num);
         updatePrice();
     }
     
-    public void printItems(){
+    void printItems(){
         System.out.println("Items included in the promotional set,");
         int i = 1;
         for (MenuItem temp: this.items){
@@ -56,11 +45,11 @@ public class Promotional {
         return this.name;
     }
     
-    public int getNumOfItems(){
+    int getNumOfItems(){
         return this.items.size();
     }
     
-    public void updatePrice(){
+    void updatePrice(){
         double counter = 0;
         for (MenuItem temp: this.items){
             counter+= temp.getPrice();
