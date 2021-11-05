@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ public class RRSPSS {
 	private static final StaffRoster roster = new StaffRoster();
 	private static final SeatingManagement sm = new SeatingManagement();
 	private static final ReservationList rl = new ReservationList();
+	private static final ArrayList<Order> orders = new ArrayList<>();
 
 	/**
 	 * Helper function to get int input that is valid and within range from user
@@ -40,6 +42,7 @@ public class RRSPSS {
 		System.out.println("Identify yourself");
 		int id = getInput(0,roster.availStaff.size()-1);
 		Staff staff = roster.availStaff.get(id);
+		System.out.println("Welcome, "+staff.getName()+" ("+staff.getJobTitle()+")");
 		while(true) {
 			System.out.println("1. Edit menu");
 			System.out.println("2. Edit promotions");
@@ -47,16 +50,19 @@ public class RRSPSS {
 			System.out.println("4. View order");
 			System.out.println("5. Edit order");
 			System.out.println("6. Create reservation");
-			System.out.println("7. Edit reservation");
+			System.out.println("7. Check/Remove reservation");
 			System.out.println("8. Check table availability");
 			System.out.println("9. Print order invoice");
 			System.out.println("10. Print sales revenue report");
 			System.out.println("11. Exit");
+			System.out.println("Enter choice");
 			switch (getInput(1,11)){
 				case 1:
+					System.out.println("Editing menu");
 					System.out.println("1. Add");
 					System.out.println("2. Update");
 					System.out.println("3. Remove");
+					System.out.println("Enter choice");
 					switch (getInput(1,3)){
 						case 1: menu.addMenuItem();break;
 						case 2: menu.updateMenuItem();break;
@@ -64,9 +70,11 @@ public class RRSPSS {
 					}
 					break;
 				case 2:
+					System.out.println("Editing promotions");
 					System.out.println("1. Add");
 					System.out.println("2. Update");
 					System.out.println("3. Remove");
+					System.out.println("Enter choice");
 					switch (getInput(1,3)){
 						case 1: menu.addPromotionalItem();break;
 						case 2: menu.updatePromotionalItem();break;
@@ -74,19 +82,51 @@ public class RRSPSS {
 					}
 					break;
 				case 3:
-					createOrder();
+					createOrder(staff);
 					break;
 				case 4:
 					viewOrder();
 					break;
 				case 5:
-					//edit order
+					System.out.println("Editing order");
+					System.out.println("1. Add item(s)");
+					System.out.println("2. Remove item(s)");
+					System.out.println("Enter choice");
+					switch (getInput(1,2)){
+						case 1: addItemToOrder();break;
+						case 2: removeItemFromOrder();break;
+					}
 					break;
 				case 6:
-					//createReservation();
+					System.out.println("Enter customer name");
+					Scanner scanner = new Scanner(System.in);
+					String name = scanner.next();
+					System.out.println("Enter pax");
+					int pax = getInput(1,10);
+					if(!hasAvailableTable(pax)){
+						System.out.println("No available table");
+						return;
+					}
+					createReservation(name,pax);
 					break;
 				case 7:
 					//edit reservation
+					System.out.println("What's ur rID?");
+					Scanner scan = new Scanner(System.in);
+					long rID = scan.nextLong();
+
+					if(hasReservation(rID)){
+						Reservation reservation = rl.getReservation(rID);
+						System.out.println("Reservation of "+reservation.getPax()+" pax by "+reservation.getCustName());
+						System.out.println(reservation.getReservationDate()+" "+reservation.getReservationTime());
+						System.out.println("1. Remove");
+						System.out.println("2. Back");
+						if(getInput(1,2) == 1){
+							rl.removeReservation(rID);
+							System.out.println("Reservation removed");
+						}
+					}else
+						System.out.println("No such reservation");
 					break;
 				case 8:
 					System.out.println("Enter No. of pax");
@@ -171,7 +211,7 @@ public class RRSPSS {
 
 	//order
 
-	static void createOrder() {
+	static void createOrder(Staff staff) {
 		// check if there's reservation, ie has valid rID, yes-> create order, else deny
 
 		//ask for rID
@@ -180,7 +220,7 @@ public class RRSPSS {
 		long rID = scan.nextLong();
 
 		if(hasReservation(rID)){
-			//Order(rID, staff, sm.); // to be finished
+			orders.add(new Order((int)rID, staff, sm.getAvailTable(rl.getReservation(rID).getPax())));//is int or long? rID is long but orderID is int
 		}
 	}
 
@@ -190,13 +230,45 @@ public class RRSPSS {
 	}
 
 	static void addItemToOrder() {
-		// TODO - implement RRSPSS.addItemToOrder
-		throw new UnsupportedOperationException();
+		System.out.println("Enter orderID");
+		int orderID = getInput(0,Integer.MAX_VALUE);
+		Order order = orders.get(orderID);
+		if(order == null){
+			System.out.println("Invalid orderID");
+			return;
+		}
+		System.out.println("1. Mains");
+		System.out.println("2. Drinks");
+		System.out.println("3. Desserts");
+		System.out.println("4. Promotions");
+		switch (getInput(1,4)){
+			case 1:menu.getMains();break;
+			case 2:menu.getDrinks();break;
+			case 3:menu.getDesserts();break;
+			case 4:menu.getPromotions();break;
+		}
+		//TODO items inaccessible, cannot continue
 	}
 
 	static void removeItemFromOrder() {
-		// TODO - implement RRSPSS.removeItemFromOrder
-		throw new UnsupportedOperationException();
+		System.out.println("Enter orderID");
+		int orderID = getInput(0,Integer.MAX_VALUE);
+		Order order = orders.get(orderID);
+		if(order == null){
+			System.out.println("Invalid orderID");
+			return;
+		}
+		System.out.println("1. Mains");
+		System.out.println("2. Drinks");
+		System.out.println("3. Desserts");
+		System.out.println("4. Promotions");
+		switch (getInput(1,4)){
+			case 1:menu.getMains();break;
+			case 2:menu.getDrinks();break;
+			case 3:menu.getDesserts();break;
+			case 4:menu.getPromotions();break;
+		}
+		//TODO items inaccessible, cannot continue
 	}
 
 	
