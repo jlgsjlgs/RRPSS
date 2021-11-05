@@ -15,7 +15,7 @@ class StaffRoster {
 void bootup(){
     ReadFile StaffList = new ReadFile("StaffList.txt");
     Scanner filescanner = new Scanner(System.in);
-    try (Scanner filesan = new Scanner(StaffList.getIS())) {
+    try (Scanner filescan = new Scanner(StaffList.getIS())) {
         ArrayList<String> fileLines = new ArrayList<>();
         
         while (filescan.hasNextLine()){
