@@ -1,23 +1,28 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+
 public class ReservationList {
 
-	private static ArrayList <Reservation> resList = new ArrayList <Reservation>();
-	private static nextrID = 1;
+	StaffRoster staff = new StaffRoster();
+	private final ArrayList<Reservation> resList = new ArrayList <>();
+	private static int nextrID = 1;
 
-	static Reservation getResList() {
+	ArrayList<Reservation> getResList() {
 		return resList;
 	}
 
-	static void addReservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem) {
-		resList.add(new Reservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem, nextrID));
+	void addReservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem) {
+		resList.add(new Reservation(name, pax, phoneNum, resDate, resTime, mem, nextrID));
 		nextrID++;
 	}
 
-	static void removeReservation(long rID) {
+	void removeReservation(long rID) {
 		resList.removeIf(res -> (res.getrID() == rID));
 	}
 
 	Reservation getReservation(long rID){
-		for (Resevation res : resList){
+		for (Reservation res : resList){
 			if (res.getrID() == rID)
 				return res;
 		}

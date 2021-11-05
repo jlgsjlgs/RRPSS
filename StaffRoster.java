@@ -9,6 +9,7 @@ class StaffRoster {
 	
 	StaffRoster(){
 		this.availStaff = new ArrayList<>();
+        bootup();
 	}
 	
 void bootup(){

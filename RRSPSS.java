@@ -1,8 +1,14 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
+import java.util.Scanner;
+
 public class RRSPSS {
 
 	//bootstart
-	//create seatingmanagement sm
-	//create ReservationList rl
+	StaffRoster roster = new StaffRoster();
+	SeatingManagement sm = new SeatingManagement();
+	ReservationList rl = new ReservationList();
 
 	//editing menu
 
@@ -52,7 +58,7 @@ public class RRSPSS {
 				long phoneNum = scan.nextLong();
 			System.out.println("bro u member?");
 				String memS = scan.next(); //y/n
-				Boolean mem = memS.charAt(0).toLowerCase() == 'y' ;
+				boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
 
 			System.out.println("Enter date in YYYY-MM-DD format");
 			LocalDate date;
@@ -75,7 +81,7 @@ public class RRSPSS {
 			}
 
 			//create reservation
-			rl.addReservation(String name, int pax, long phoneNum, LocalDate date, LocalTime time, Boolean mem); 
+			rl.addReservation(name,pax, phoneNum, date, time, mem);
 		}
 
 		// else say sorry, no reservation obj created
@@ -92,7 +98,7 @@ public class RRSPSS {
 		else return false;
 	}
 
-	public void removeReservation() {
+	public void removeReservation(long rID) {
 		if(rl.getReservation(rID) != null)
 			rl.removeReservation(rID);
 	}
@@ -116,7 +122,7 @@ public class RRSPSS {
 		long rID = scan.nextLong();
 
 		if(checkReservation(rID)){
-			Order(rID, staff, sm.); // to be finished
+			//Order(rID, staff, sm.); // to be finished
 		}
 	}
 

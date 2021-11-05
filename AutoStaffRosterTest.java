@@ -1,5 +1,3 @@
-package CZ2002_OOP_Proj;
-
 public class AutoStaffRosterTest {
 
 	public static void main(String[] args) {
@@ -8,5 +6,4 @@ public class AutoStaffRosterTest {
 		staffTeam.bootup();
 		staffTeam.showStaff();
 	}
-
 }
