@@ -1,57 +1,120 @@
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class RRSPSS {
 
 	//bootstart
-	StaffRoster roster = new StaffRoster();
-	SeatingManagement sm = new SeatingManagement();
-	ReservationList rl = new ReservationList();
+	private static final Menu menu = new Menu();
+	private static final StaffRoster roster = new StaffRoster();
+	private static final SeatingManagement sm = new SeatingManagement();
+	private static final ReservationList rl = new ReservationList();
 
-	//editing menu
-
-	public void addItem() {
-		// TODO - implement RRSPSS.addItem
-		throw new UnsupportedOperationException();
+	/**
+	 * Helper function to get int input that is valid and within range from user
+	 * @param min Minimum value
+	 * @param max Maximum value
+	 * @return input
+	 */
+	private static int getInput(Integer min,Integer max){
+		Scanner scanner = new Scanner(System.in);
+		int choice = 0;
+		do {
+			try {
+				choice = scanner.nextInt();
+			}catch (InputMismatchException e){
+				System.out.println("Invalid number, try again");
+			}
+			if(choice < min || choice > max){
+				System.out.println("Must be within the range of "+min+" and "+max+", try again");
+			}else
+				break;
+		}while (true);
+		return choice;
 	}
 
-	public void removeItem() {
-		// TODO - implement RRSPSS.removeItem
-		throw new UnsupportedOperationException();
+	public static void main(String[] args) {
+		roster.showStaff();
+		System.out.println("Identify yourself");
+		int id = getInput(0,roster.availStaff.size()-1);
+		Staff staff = roster.availStaff.get(id);
+		while(true) {
+			System.out.println("1. Edit menu");
+			System.out.println("2. Edit promotions");
+			System.out.println("3. Create order");
+			System.out.println("4. View order");
+			System.out.println("5. Edit order");
+			System.out.println("6. Create reservation");
+			System.out.println("7. Edit reservation");
+			System.out.println("8. Check table availability");
+			System.out.println("9. Print order invoice");
+			System.out.println("10. Print sales revenue report");
+			System.out.println("11. Exit");
+			switch (getInput(1,11)){
+				case 1:
+					System.out.println("1. Add");
+					System.out.println("2. Update");
+					System.out.println("3. Remove");
+					switch (getInput(1,3)){
+						case 1: menu.addMenuItem();break;
+						case 2: menu.updateMenuItem();break;
+						case 3: menu.deleteMenuItem();break;
+					}
+					break;
+				case 2:
+					System.out.println("1. Add");
+					System.out.println("2. Update");
+					System.out.println("3. Remove");
+					switch (getInput(1,3)){
+						case 1: menu.addPromotionalItem();break;
+						case 2: menu.updatePromotionalItem();break;
+						case 3: menu.deletePromotionalItem();break;
+					}
+					break;
+				case 3:
+					createOrder();
+					break;
+				case 4:
+					viewOrder();
+					break;
+				case 5:
+					//edit order
+					break;
+				case 6:
+					//createReservation();
+					break;
+				case 7:
+					//edit reservation
+					break;
+				case 8:
+					System.out.println("Enter No. of pax");
+					System.out.println(hasAvailableTable(getInput(1,10)) ? "Table available" : "No available table");
+					break;
+				case 9:
+					printOrderInvoice();
+					break;
+				case 10:
+					printSaleRevenue();
+					break;
+				case 11:
+					return;
+				default:
+					System.out.println("Invalid choice");
+					break;
+			}
+		}
 	}
-
-	public void updateItem() {
-		// TODO - implement RRSPSS.updateItem
-		throw new UnsupportedOperationException();
-	}
-
-	//promotion
-	public void addPromotional() {
-		// TODO - implement RRSPSS.addPromotional
-		throw new UnsupportedOperationException();
-	}
-
-	public void removePromotional() {
-		// TODO - implement RRSPSS.removePromotional
-		throw new UnsupportedOperationException();
-	}
-
-	public void updatePromotional() {
-		// TODO - implement RRSPSS.updatePromotional
-		throw new UnsupportedOperationException();
-	}
-
 	//reservation
 
-	void createReservation(String name, int pax) {
+	static void createReservation(String name, int pax) {
 
 		Scanner scan = new Scanner(System.in);
 
 		//check if table available
 		// if yes then actually creates reservation , long phoneNum, Boolean mem
-		if(checkTableAvailability(pax)){
+		if(hasAvailableTable(pax)){
 
 			//get additional info
 			System.out.println("can i have ur number");
@@ -92,28 +155,23 @@ public class RRSPSS {
 		
 	}
 
-	public Boolean checkReservation(long rID) {
-		if(rl.getReservation(rID) != null)
-			return true;
-		else return false;
+	static Boolean hasReservation(long rID) {
+		return rl.getReservation(rID) != null;
 	}
 
-	public void removeReservation(long rID) {
-		if(rl.getReservation(rID) != null)
-			rl.removeReservation(rID);
+	static void removeReservation(long rID) {
+		rl.removeReservation(rID);
 	}
 
 	//check table
-	public Boolean checkTableAvailability(int pax) {
-		if (sm.getAvailTable(pax) <0 )
-			return false;
-		else return true;
+	static Boolean hasAvailableTable(int pax) {
+		return sm.getAvailTable(pax) >= 0;
 	}
 
 
 	//order
 
-	public void createOrder() {
+	static void createOrder() {
 		// check if there's reservation, ie has valid rID, yes-> create order, else deny
 
 		//ask for rID
@@ -121,22 +179,22 @@ public class RRSPSS {
 		System.out.println("What's ur rID?");
 		long rID = scan.nextLong();
 
-		if(checkReservation(rID)){
+		if(hasReservation(rID)){
 			//Order(rID, staff, sm.); // to be finished
 		}
 	}
 
-	public void viewOrder() {
+	static void viewOrder() {
 		// TODO - implement RRSPSS.viewOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void addItemToOrder() {
+	static void addItemToOrder() {
 		// TODO - implement RRSPSS.addItemToOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void removeItemFromOrder() {
+	static void removeItemFromOrder() {
 		// TODO - implement RRSPSS.removeItemFromOrder
 		throw new UnsupportedOperationException();
 	}
@@ -144,14 +202,14 @@ public class RRSPSS {
 	
 	//check out
 
-	public void printOrderInvoice() {
+	static void printOrderInvoice() {
 		// TODO - implement RRSPSS.printOrderInvoice
 		throw new UnsupportedOperationException();
 	}
 
 	//wrapping up
 
-	public void printSaleRevenue() {
+	static void printSaleRevenue() {
 		// TODO - implement RRSPSS.printSaleRevenue
 		throw new UnsupportedOperationException();
 	}
