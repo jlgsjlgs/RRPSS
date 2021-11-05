@@ -1,6 +1,366 @@
-class Menu {
 
-	private MenuItem menuItems;
-	private Promotional promotionalItems;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+/**
+ *
+ * @author jonat
+ */
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Menu {
+    private HashMap<String, ArrayList<MenuItem>> myMenu;
+    private ArrayList<Promotional> promoMenu;
+    private menuReader myReader;
+    private menuItemModifier menuMod;
+    
+    public Menu(){
+    	this.promoMenu = new ArrayList<Promotional>();
+        this.myReader = new menuReader();
+        this.myMenu = this.myReader.readMenuFile();
+        this.menuMod = new menuItemModifier();
+    }
+
+    public void addMenuItem(){
+        this.menuMod.addMenuItem(this.myMenu);
+    }
+
+    public void updateMenuItem(){
+        boolean flag = true;
+        Scanner sc = new Scanner(System.in);
+        int i=1;
+        int itemNum;
+        String holder = "";
+        System.out.println("What type of item do you want to modify?");
+
+        for (String temp : myMenu.keySet()){
+            System.out.println(i + ". " + temp);
+            i++;
+        }
+        int itemType = Integer.valueOf(sc.nextLine());
+
+        switch (itemType){
+            case 1:
+                getMains();
+                holder = "MainCourse";
+                break;
+            case 2:
+                getDrinks();
+                holder = "Drink";
+                break;
+            case 3:
+                getDesserts();
+                holder = "Dessert";
+                break;
+            default:
+                System.out.println("Error!");
+                flag = false;
+                break;
+        }
+
+        if (flag == true){
+            System.out.println("Which item do you want to modify?");
+            itemNum = Integer.valueOf(sc.nextLine());
+
+            if (itemNum > myMenu.get(holder).size() || itemNum <= 0){
+                System.out.println("Error!");
+            } else {
+                this.menuMod.updateMenuItem(this.myMenu, holder, itemNum);
+            }
+        }
+    }
+
+    public void deleteMenuItem(){
+        boolean flag = true;
+        Scanner sc = new Scanner(System.in);
+        int i=1;
+        int itemNum;
+        String holder = "";
+
+        System.out.println("What type of item do you want to delete?");
+        for (String temp : myMenu.keySet()){
+            System.out.println(i + ". " + temp);
+            i++;
+        }
+        int itemType = Integer.valueOf(sc.nextLine());
+
+        switch (itemType){
+            case 1:
+                getMains();
+                holder = "MainCourse";
+                break;
+            case 2:
+                getDrinks();
+                holder = "Drink";
+                break;
+            case 3:
+                getDesserts();
+                holder = "Dessert";
+                break;
+            default:
+                System.out.println("Error!");
+                flag = false;
+                break;
+        }
+
+        if (flag == true){
+            System.out.println("Which item do you want to delete?");
+            itemNum = Integer.valueOf(sc.nextLine());
+
+            if (itemNum > myMenu.get(holder).size() || itemNum <= 0){
+                System.out.println("Error!");
+            } else {
+                this.menuMod.deleteMenuItem(this.myMenu, holder, itemNum);
+                System.out.println("After update,");
+                switch (holder){
+                    case "MainCourse":
+                        getMains();
+                        break;
+                    case "Drink":
+                        getDrinks();
+                        break;
+                    case "Dessert":
+                        getDesserts();
+                        break;
+                }
+            }
+        }
+    }
+    
+    //DONE
+    public void addPromotionalItem(){  // Add menu items to a set, add set to promotionalitem
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter name for promotion: ");
+        String promoname = sc.nextLine();
+        Promotional temp = new Promotional(promoname);
+        System.out.println("How many items would you like in the promotion?");
+        int numOfItems = sc.nextInt();
+        for (int i = 0; i < numOfItems; i++) {
+            System.out.println("What type of item do you want to add to the promotion?");
+            showItemTypes();
+            int userInput = sc.nextInt();        
+            switch (userInput){
+            	case 1:
+	            	System.out.println("Which Main item would you like to add?");
+	            	getMains();
+	            	int itemNumber = sc.nextInt(); 
+	                if (itemNumber < 1 || itemNumber > myMenu.get("MainCourse").size()){
+	                    System.out.println("Invalid item!");
+	                    break;
+	                }
+	                temp.addItem(myMenu.get("MainCourse").get(itemNumber-1));
+	                break;
+               	case 2:
+	            	System.out.println("Which Drink item would you like to add?");
+	            	getDrinks();
+	            	itemNumber = sc.nextInt();  
+	                if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
+	                    System.out.println("Invalid item!");
+	                    break;
+	                }
+	                temp.addItem(myMenu.get("Drink").get(itemNumber-1));
+	                break;
+             	case 3:
+	            	System.out.println("Which Dessert item would you like to add?");
+	            	getDesserts();
+	            	itemNumber = sc.nextInt();  
+	                if (itemNumber < 1 || itemNumber > myMenu.get("Dessert").size()){
+	                    System.out.println("Invalid item!");
+	                    break;
+	                }
+	                temp.addItem(myMenu.get("Dessert").get(itemNumber-1));
+	                break;
+	            default:
+	            	System.out.println("Error!");
+	            	break;
+	                	
+            }	
+        }
+        temp.printItems();
+        System.out.println("Total price for promotion: " + temp.getPrice());
+        this.promoMenu.add(temp);
+    }
+    
+    
+    
+     public void updatePromotionalItem(){
+    	 
+    	 boolean continueFlag = true;
+         if (this.promoMenu.size() == 0){
+             System.out.println("No promotions to update!");
+             return;
+         }
+         Scanner sc = new Scanner(System.in);
+         System.out.println("Which promotion item do you want to update?");
+         getPromotions();
+         int itemNumber = sc.nextInt(); 
+         if (itemNumber < 1 || itemNumber > promoMenu.size()){  // Pick promo item to update
+             System.out.println("Invalid item!");
+         }
+         Promotional toUpdate = promoMenu.get(itemNumber-1);
+         // Add or Remove items from promo bundle
+         do {
+        	 toUpdate.printItems();
+        	 System.out.println("Do you want to add or remove items from the promo?");
+        	 System.out.println("1. Add\n2. Remove\n3. Exit");
+        	 int addOrRemove = sc.nextInt();
+        	 switch (addOrRemove) {
+        	 case 1:  // Add
+        		 System.out.println("What type of item do you want to add to the promotion?");
+                 showItemTypes();
+                 int userInput = sc.nextInt();        
+                 switch (userInput){
+                 	case 1:
+     	            	System.out.println("Which Main item would you like to add?");
+     	            	getMains();
+     	            	itemNumber = sc.nextInt(); 
+     	                if (itemNumber < 1 || itemNumber > myMenu.get("MainCourse").size()){
+     	                    System.out.println("Invalid item!");
+     	                    break;
+     	                }
+     	                toUpdate.addItem(myMenu.get("MainCourse").get(itemNumber-1));
+     	                break;
+                    	case 2:
+     	            	System.out.println("Which Drink item would you like to add?");
+     	            	getDrinks();
+     	            	itemNumber = sc.nextInt();  
+     	                if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
+     	                    System.out.println("Invalid item!");
+     	                    break;
+     	                }
+     	                toUpdate.addItem(myMenu.get("Drink").get(itemNumber-1));
+     	                break;
+                  	case 3:
+     	            	System.out.println("Which Dessert item would you like to add?");
+     	            	getDesserts();
+     	            	itemNumber = sc.nextInt();  
+     	                if (itemNumber < 1 || itemNumber > myMenu.get("Dessert").size()){
+     	                    System.out.println("Invalid item!");
+     	                    break;
+     	                }
+     	                toUpdate.addItem(myMenu.get("Dessert").get(itemNumber-1));
+     	                break;
+     	            default:
+     	            	System.out.println("Error!");
+     	            	break;
+                 }
+                 break;
+        	 case 2:  // Remove item from Promo bundle
+        		 toUpdate.printItems();
+        		 System.out.println("Which item would you like to remove?");
+        		 int removeItem = sc.nextInt();
+        	      if (removeItem < 1 || removeItem > toUpdate.getNumOfItems()){
+	                    System.out.println("Invalid item!");
+	                }
+        	      toUpdate.removeItem(removeItem-1);
+        	      toUpdate.printItems();
+        		 break;
+        	 case 3:
+        		 continueFlag = false;
+        		 System.out.println("\n****Final Promo Entry****\n");
+        		 toUpdate.printItems();
+    	         System.out.println("Total price for promotion: " + toUpdate.getPrice());
+    	         System.out.println(" ");
+        		 System.out.println("Exiting...");
+        		 break;
+        	 }
+         }while (continueFlag == true);
+     }
+    
+     
+     public void deletePromotionalItem(){
+    	 		 boolean continueFlag = true;
+    	 		 
+    	 		 do {
+    	 			  if (promoMenu.size() == 0){
+    	    	             System.out.println("No promotions to update!");
+    	    	             continueFlag = false;
+    	    	             return;
+    	    	         }
+    	 			 Scanner sc = new Scanner(System.in);
+        	         System.out.println("Which promotion item do you want to delete?");
+        	         getPromotions();
+                	 int removeIndex = sc.nextInt();  
+                     if (removeIndex < 1 || removeIndex > promoMenu.size()){
+                         System.out.println("Invalid item!");
+                     }
+                     promoMenu.remove(removeIndex-1);
+    	 		 } while (continueFlag == true);
+     }
+                 
+    //DONE
+    public void getMains(){
+        int i = 1;
+        System.out.println();
+        System.out.println("***Mains in the menu");
+        for (MenuItem tempObject : myMenu.get("MainCourse")){
+                MainCourse temp = (MainCourse) tempObject;
+                System.out.println(i + ". " + temp.getName());
+                System.out.println("Description: " + temp.getDescription());
+                System.out.println("Price: " + temp.getPrice());
+                System.out.println();
+                i++;
+        }
+    }
+    
+    //DONE
+    public void getDrinks(){
+        int i = 1;
+        System.out.println();
+        System.out.println("***Drinks in the menu");
+        for (MenuItem tempObject : myMenu.get("Drink")){
+                Drink temp = (Drink) tempObject;
+                System.out.println(i + ". " + temp.getName());
+                System.out.println("Description: " + temp.getDescription());
+                System.out.println("Price: " + temp.getPrice());
+                System.out.println();
+                i++;
+        }
+    }
+    
+    //DONE
+    public void getDesserts(){
+        int i = 1;
+        System.out.println();
+        System.out.println("***Desserts in the menu");
+        for (MenuItem tempObject : myMenu.get("Dessert")){
+                Dessert temp = (Dessert) tempObject;
+                System.out.println(i + ". " + temp.getName());
+                System.out.println("Description: " + temp.getDescription());
+                System.out.println("Price: " + temp.getPrice());
+                System.out.println();
+                i++;
+        }
+    }
+    
+     public void getPromotions(){
+         if (this.promoMenu.size() == 0){
+             System.out.println("No promotions found!");
+         } else {
+             for (int i =0; i<this.promoMenu.size(); i++){
+                 System.out.println((i+1) + ". " + this.promoMenu.get(i).getName());
+             }
+         }
+     }
+    
+    
+    
+    
+    
+    public void showItemTypes(){
+        System.out.println("1. MainCourse");
+        System.out.println("2. Drink");
+        System.out.println("3. Dessert");
+    }
+    
+    public void showItemParameters(){
+        System.out.println("1. Name");
+        System.out.println("2. Description");
+        System.out.println("3. Price");
+    }
 }
