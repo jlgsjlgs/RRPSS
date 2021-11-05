@@ -4,7 +4,7 @@ class Order {
 
 	private int orderID;
 	private Staff staff;
-	private ArrayList<MenuItem> myOrder;
+	private ArrayList<OrderItem> myOrder;
 	private int tableID;
 
 	Order(int orderID, Staff staff, int tableID){
@@ -22,7 +22,7 @@ class Order {
 		return this.staff;
 	}
 
-	ArrayList<MenuItem> getMyOrder() {
+	ArrayList<OrderItem> getMyOrder() {
 		return myOrder;
 	}
 
@@ -30,22 +30,45 @@ class Order {
 		return tableID;
 	}
 
-	void addItemToOrder(MenuItem item) {
-		myOrder.add(item);
+	void addItemToOrder(MenuItem item, int quantity) {
+		for(OrderItem oItem : myOrder){
+			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
+				oItem.addMore(quantity);
+				return;
+			}
+		}
+		myOrder.add(new OrderItem(item, quantity)); //add new item in myOrder
 	}
+	
 
-	void removeItemFromOrder(MenuItem item) {
-		myOrder.remove(item);
+	boolean removeItemFromOrder(MenuItem item) {
+		
+		for(OrderItem oItem : myOrder){
+			if(oItem.getOrderName() == item.getName()){ //found order item
+				oItem = null; //delete item obj
+				myOrder.remove(oItem); //delete item from myOrder arraylist
+				return true;
+			}
+		}
+		
+		//else if item not found in myOrder
+		System.out.println("This item cannot be removed since it doesn't exist in your order.");
+		return false;
 	}
 
 	void printOrder() {
-		for(MenuItem orderItem : myOrder)
-			System.out.println(orderItem);
+		System.out.println("---------------------------------------------------------------");
+		for(OrderItem oItem : myOrder)
+			System.out.println(oItem.getOrderQuantity() +" "+ oItem.getOrderName() +"\t\t" +oItem.price()); 
+		System.out.println("---------------------------------------------------------------");
 	}
 
 	void totalPrice() {
 		// to do
+		
 	}
+	
+	void 
 
 	void isMember() {
 		// TODO - implement Order.isMember
