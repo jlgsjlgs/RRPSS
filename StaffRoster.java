@@ -11,14 +11,11 @@ class StaffRoster {
 		this.availStaff = new ArrayList<>();
         bootup();
 	}
-	
+
 void bootup(){
-	InputStream is = StaffRoster.class.getResourceAsStream("StaffNominalRoll.txt");
+    ReadFile StaffList = new ReadFile("StaffList.txt");
     Scanner filescanner = new Scanner(System.in);
-    //System.out.println("File to read: ");
-    String filename = "TestStaffRoster.txt";
-//    try (Scanner filescan = new Scanner(Paths.get(filename))){
-    try (Scanner filescan = new Scanner(is)) {
+    try (Scanner filesan = new Scanner(StaffList.getIS())) {
         ArrayList<String> fileLines = new ArrayList<>();
         
         while (filescan.hasNextLine()){
