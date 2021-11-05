@@ -3,13 +3,7 @@ class OrderItem{
 	private int quantity;
 	private double itemPrice;
 
-	OrderItem(MenuItem item , int q){
-		orderName = item.getName();
-		quantity = q;
-		itemPrice = item.getPrice();
-	}
-	
-	OrderItem(Promotional item , int q){
+	OrderItem(Item item , int q){
 		orderName = item.getName();
 		quantity = q;
 		itemPrice = item.getPrice();
