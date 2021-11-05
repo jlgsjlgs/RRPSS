@@ -29,8 +29,21 @@ class Order {
 	int getTableID() {
 		return tableID;
 	}
+	
 
-	void addItemToOrder(MenuItem item, int quantity) {
+	void addRegularItemToOrder(MenuItem item, int quantity) {
+		
+		for(OrderItem oItem : myOrder){
+			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
+				oItem.addMore(quantity);
+				return;
+			}
+		}
+		myOrder.add(new OrderItem(item, quantity)); //add new item in myOrder
+	}
+	
+	void addPromotionalItemToOrder(Promotional item, int quantity) {
+		
 		for(OrderItem oItem : myOrder){
 			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
 				oItem.addMore(quantity);
@@ -63,16 +76,11 @@ class Order {
 		System.out.println("---------------------------------------------------------------");
 	}
 
-	void totalPrice() {
-		// to do
-		
+	double totalPrice() {
+		double totalPrice = 0;
+		for(OrderItem oItem : myOrder)
+			totalPrice += oItem.price();
+		return totalPrice;
 	}
 	
-	void 
-
-	void isMember() {
-		// TODO - implement Order.isMember
-		throw new UnsupportedOperationException();
-	}
-
 }
