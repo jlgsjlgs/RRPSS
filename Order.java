@@ -29,22 +29,11 @@ class Order {
 	int getTableID() {
 		return tableID;
 	}
-	
 
-	void addRegularItemToOrder(MenuItem item, int quantity) {
-		
-		for(OrderItem oItem : myOrder){
-			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
-				oItem.addMore(quantity);
-				return;
-			}
-		}
-		myOrder.add(new OrderItem(item, quantity)); //add new item in myOrder
-	}
 	
-	void addPromotionalItemToOrder(Promotional item, int quantity) {
+	void addItemToOrder(Item item, int quantity) {
 		
-		for(OrderItem oItem : myOrder){
+		for(Item oItem : myOrder){
 			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
 				oItem.addMore(quantity);
 				return;
@@ -54,7 +43,7 @@ class Order {
 	}
 	
 
-	boolean removeItemFromOrder(MenuItem item) {
+	boolean removeItemFromOrder(Item item) {
 		
 		for(OrderItem oItem : myOrder){
 			if(oItem.getOrderName() == item.getName()){ //found order item
