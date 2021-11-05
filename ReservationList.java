@@ -23,6 +23,7 @@ class ReservationList {
 
 	void removeReservation(long rID) {
 		resList.removeIf(res -> (res.getrID() == rID));
+		//have to delete res obj??
 	}
 
 	Reservation getReservation(long rID){
