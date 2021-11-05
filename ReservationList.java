@@ -5,7 +5,7 @@ import java.util.ArrayList;
 class ReservationList {
 	
 	private ArrayList<Reservation> resList;
-	private static final int NEXT_RID;
+	private static int NEXT_RID;
 	
 	ReservationList(){
 		resList = new ArrayList <Reservation>();
