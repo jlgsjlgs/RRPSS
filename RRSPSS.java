@@ -13,7 +13,7 @@ public class RRSPSS {
 	private static final SeatingManagement sm = new SeatingManagement();
 	private static final ReservationList rl = new ReservationList();
 	private static final ArrayList<Order> orders = new ArrayList<>();
-	 
+
 
 	/**
 	 * Helper function to get int input that is valid and within range from user
@@ -86,16 +86,29 @@ public class RRSPSS {
 					createOrder(staff);
 					break;
 				case 4:
-					viewOrder();
+					System.out.println("Enter orderID");
+					viewOrder(getInput(0,Integer.MAX_VALUE));
 					break;
 				case 5:
+					int orderID = getInput(0,Integer.MAX_VALUE);
+					Order order = null;
+					for(Order o : orders){
+						if(o.getOrderID() == orderID){
+							order = o;
+							break;
+						}
+					}
+					if(order == null){
+						System.out.println("Invalid OrderID");
+						break;
+					}
 					System.out.println("Editing order");
 					System.out.println("1. Add item(s)");
 					System.out.println("2. Remove item(s)");
 					System.out.println("Enter choice");
 					switch (getInput(1,2)){
-						case 1: addItemToOrder();break;
-						case 2: removeItemFromOrder();break;
+						case 1: addItemToOrder(order);break;
+						case 2: removeItemFromOrder(order);break;
 					}
 					break;
 				case 6:
@@ -123,7 +136,7 @@ public class RRSPSS {
 						System.out.println("1. Remove");
 						System.out.println("2. Back");
 						if(getInput(1,2) == 1){
-							rl.removeReservation(rID);
+							removeReservation(rID);
 							System.out.println("Reservation removed");
 						}
 					}else
@@ -134,7 +147,19 @@ public class RRSPSS {
 					System.out.println(hasAvailableTable(getInput(1,10)) ? "Table available" : "No available table");
 					break;
 				case 9:
-					printOrderInvoice();
+					orderID = getInput(0,Integer.MAX_VALUE);
+					order = null;
+					for(Order o : orders){
+						if(o.getOrderID() == orderID){
+							order = o;
+							break;
+						}
+					}
+					if(order == null){
+						System.out.println("Invalid OrderID");
+						break;
+					}
+					printOrderInvoice(order);
 					break;
 				case 10:
 					printSaleRevenue();
@@ -222,8 +247,11 @@ public class RRSPSS {
 		long rID = scan.nextLong();
 
 		if(hasReservation(rID)){
-			orders.add(new Order((int)rID, staff, sm.getAvailTable(rl.getReservation(rID).getPax())));//is int or long? rID is long but orderID is int
-			sm.assignTable(sm.getAvailTable(rl.getReservation(rID).gettID());
+			Reservation reservation = rl.getReservation(rID);
+			int table = sm.getAvailTable(reservation.getPax());
+			orders.add(new Order((int)rID, staff, table));//is int or long? rID is long but orderID is int
+			sm.assignTable(table);
+			reservation.settID(table);
 		}
 		
 	}
@@ -238,14 +266,7 @@ public class RRSPSS {
 		System.out.println("Invalid OrderID");
 	}
 
-	static void addItemToOrder() {
-		System.out.println("Enter orderID");
-		int orderID = getInput(0,Integer.MAX_VALUE);
-		Order order = orders.get(orderID);
-		if(order == null){
-			System.out.println("Invalid orderID");
-			return;
-		}
+	static void addItemToOrder(Order order) {
 		System.out.println("1. Mains");
 		System.out.println("2. Drinks");
 		System.out.println("3. Desserts");
@@ -259,14 +280,7 @@ public class RRSPSS {
 		//TODO items inaccessible, cannot continue
 	}
 
-	static void removeItemFromOrder() {
-		System.out.println("Enter orderID");
-		int orderID = getInput(0,Integer.MAX_VALUE);
-		Order order = orders.get(orderID);
-		if(order == null){
-			System.out.println("Invalid orderID");
-			return;
-		}
+	static void removeItemFromOrder(Order order) {
 		System.out.println("1. Mains");
 		System.out.println("2. Drinks");
 		System.out.println("3. Desserts");
@@ -283,9 +297,20 @@ public class RRSPSS {
 	
 	//check out
 
-	static void printOrderInvoice() {
-		// TODO - implement RRSPSS.printOrderInvoice
-		throw new UnsupportedOperationException();
+	static void printOrderInvoice(Order order) {
+		System.out.println("RESTAURANT NAME");
+		System.out.println("-----------------");
+		System.out.println("Server: "+order.getStaff()+"\t\t"+LocalDate.now().toString());
+		System.out.println("Table: "+order.getTableID()+"\t\t"+LocalTime.now().toString());
+		System.out.println("-----------------");
+		for(OrderItem item : order.getMyOrder()){
+			System.out.println(item.getOrderQuantity()+"\t"+item.getOrderName()+"\t\t"+item.price());
+		}
+		System.out.println("-----------------");
+		System.out.println("\t\tSubtotal:\t"+order.totalPrice());
+		System.out.println("\t\tGST:\t"+order.totalPrice()*0.07);
+		System.out.println("\t\tTotal:\t"+order.totalPrice()*1.07);
+		System.out.println("-----------------");
 	}
 
 	//wrapping up

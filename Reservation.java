@@ -16,10 +16,10 @@ class Reservation {
 		custName = name;
 		this.pax = pax;
 		contact = phoneNum;
-		reservedDate = Date.setDate(resDate);
-		reservedTime = Date.setTime(resTime);
+		reservedDate = resDate;
+		reservedTime = resTime;
 		membership = mem;
-		this.rID = rID;
+		rID = rId;
 	}
 
 	LocalDate getReservationDate() {
@@ -48,6 +48,10 @@ class Reservation {
 	
 	int gettID(){
 		return tID;
+	}
+
+	public void settID(int tID) {
+		this.tID = tID;
 	}
 
 	int allocatedReserveTable(SeatingManagement sm) { //if returns -1, no table resrved, else, reservation is successful + which table was allocated
