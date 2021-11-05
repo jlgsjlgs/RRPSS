@@ -1,4 +1,4 @@
-class Promotional {
+class Promotional implements Item {
 
 	private MenuItem promotion;
 	private String name;
