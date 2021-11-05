@@ -1,36 +1,25 @@
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author jonat
- */
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Menu {
+class Menu {
     private HashMap<String, ArrayList<MenuItem>> myMenu;
     private ArrayList<Promotional> promoMenu;
     private menuReader myReader;
     private menuItemModifier menuMod;
     
-    public Menu(){
+    Menu(){
     	this.promoMenu = new ArrayList<Promotional>();
         this.myReader = new menuReader();
         this.myMenu = this.myReader.readMenuFile();
         this.menuMod = new menuItemModifier();
     }
 
-    public void addMenuItem(){
+    void addMenuItem(){
         this.menuMod.addMenuItem(this.myMenu);
     }
 
-    public void updateMenuItem(){
+    void updateMenuItem(){
         boolean flag = true;
         Scanner sc = new Scanner(System.in);
         int i=1;
@@ -75,7 +64,7 @@ public class Menu {
         }
     }
 
-    public void deleteMenuItem(){
+    void deleteMenuItem(){
         boolean flag = true;
         Scanner sc = new Scanner(System.in);
         int i=1;
@@ -133,7 +122,7 @@ public class Menu {
     }
     
     //DONE
-    public void addPromotionalItem(){  // Add menu items to a set, add set to promotionalitem
+    void addPromotionalItem(){  // Add menu items to a set, add set to promotionalitem
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter name for promotion: ");
         String promoname = sc.nextLine();
@@ -188,7 +177,7 @@ public class Menu {
     
     
     
-     public void updatePromotionalItem(){
+    void updatePromotionalItem(){
     	 
     	 boolean continueFlag = true;
          if (this.promoMenu.size() == 0){
@@ -273,7 +262,7 @@ public class Menu {
      }
     
      
-     public void deletePromotionalItem(){
+    void deletePromotionalItem(){
     	 		 boolean continueFlag = true;
     	 		 
     	 		 do {
@@ -294,7 +283,7 @@ public class Menu {
      }
                  
     //DONE
-    public void getMains(){
+    void getMains(){
         int i = 1;
         System.out.println();
         System.out.println("***Mains in the menu");
@@ -309,7 +298,7 @@ public class Menu {
     }
     
     //DONE
-    public void getDrinks(){
+    void getDrinks(){
         int i = 1;
         System.out.println();
         System.out.println("***Drinks in the menu");
@@ -324,7 +313,7 @@ public class Menu {
     }
     
     //DONE
-    public void getDesserts(){
+    void getDesserts(){
         int i = 1;
         System.out.println();
         System.out.println("***Desserts in the menu");
@@ -338,7 +327,7 @@ public class Menu {
         }
     }
     
-     public void getPromotions(){
+    void getPromotions(){
          if (this.promoMenu.size() == 0){
              System.out.println("No promotions found!");
          } else {
@@ -352,13 +341,13 @@ public class Menu {
     
     
     
-    public void showItemTypes(){
+    void showItemTypes(){
         System.out.println("1. MainCourse");
         System.out.println("2. Drink");
         System.out.println("3. Dessert");
     }
     
-    public void showItemParameters(){
+    void showItemParameters(){
         System.out.println("1. Name");
         System.out.println("2. Description");
         System.out.println("3. Price");
