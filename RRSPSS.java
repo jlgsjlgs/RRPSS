@@ -13,6 +13,7 @@ public class RRSPSS {
 	private static final SeatingManagement sm = new SeatingManagement();
 	private static final ReservationList rl = new ReservationList();
 	private static final ArrayList<Order> orders = new ArrayList<>();
+	 
 
 	/**
 	 * Helper function to get int input that is valid and within range from user
@@ -213,6 +214,7 @@ public class RRSPSS {
 
 	static void createOrder(Staff staff) {
 		// check if there's reservation, ie has valid rID, yes-> create order, else deny
+		
 
 		//ask for rID
 		Scanner scan = new Scanner(System.in);
@@ -221,12 +223,19 @@ public class RRSPSS {
 
 		if(hasReservation(rID)){
 			orders.add(new Order((int)rID, staff, sm.getAvailTable(rl.getReservation(rID).getPax())));//is int or long? rID is long but orderID is int
+			sm.assignTable(sm.getAvailTable(rl.getReservation(rID).gettID());
 		}
+		
 	}
 
-	static void viewOrder() {
-		// TODO - implement RRSPSS.viewOrder
-		throw new UnsupportedOperationException();
+	static void viewOrder(int orderID) {
+		for(Order oItem : orders){
+			if(oItem.getOrderID() == orderID){ //found order item
+				oItem.printOrder();
+				return;
+			}
+		}
+		System.out.println("Invalid OrderID");
 	}
 
 	static void addItemToOrder() {
