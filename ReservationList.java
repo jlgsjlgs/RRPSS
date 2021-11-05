@@ -18,12 +18,18 @@ class ReservationList {
 
 	void addReservation(String name, int pax, long phoneNum, LocalDate resDate, LocalTime resTime, Boolean mem) {
 		resList.add(new Reservation(name, pax, phoneNum, resDate, resTime, mem, NEXT_RID));
+		System.out.println("Please note, your reservation ID is : " + NEXT_RID);
 		NEXT_RID++;
 	}
 
 	void removeReservation(long rID) {
-		resList.removeIf(res -> (res.getrID() == rID));
-		//have to delete res obj??
+		if (resList.removeIf(res -> (res.getrID() == rID))){
+			//have to delete res obj??
+			System.out.println("Your reservation " + rID+ "is successfully removed");
+		}
+		else 
+			System.out.println("Error in removing reservation. No such reservation");
+		
 	}
 
 	Reservation getReservation(long rID){
