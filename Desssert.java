@@ -1,2 +1,0 @@
-class Desssert extends MenuItem {
-}
