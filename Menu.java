@@ -338,9 +338,6 @@ class Menu {
      }
     
     
-    
-    
-    
     void showItemTypes(){
         System.out.println("1. MainCourse");
         System.out.println("2. Drink");
