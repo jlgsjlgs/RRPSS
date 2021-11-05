@@ -45,9 +45,14 @@ class Reservation {
 	long getrID(){
 		return rID;
 	}
+	
+	int gettID(){
+		return tID;
+	}
 
 	int allocatedReserveTable(SeatingManagement sm) { //if returns -1, no table resrved, else, reservation is successful + which table was allocated
 		int tID = sm.getAvailTable(getPax());
+		sm.assignTable();
 		if(tID != -1)
 			sm.reserveATable(tID);
 		else
