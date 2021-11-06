@@ -67,7 +67,7 @@ class Order {
 	void printOrder() {
 		System.out.println("---------------------------------------------------------------");
 		for(OrderItem oItem : myOrder)
-			System.out.println(oItem.getOrderQuantity() +" "+ oItem.getOrderName() +"\t\t" + NumberFormat.getCurrencyInstance().format(oItem.price())); 
+			System.out.println(oItem.getOrderQuantity() +"\t"+ oItem.getOrderName() +"\t\t" + NumberFormat.getCurrencyInstance().format(oItem.price())); 
 		System.out.println("---------------------------------------------------------------");
 	}
 

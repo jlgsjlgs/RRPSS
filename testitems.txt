@@ -8,11 +8,6 @@ Ice Lemon Tea
 Cool and refreshing
 3.50
 
-MainCourse
-Chicken Noodle
-Good Soup
-6.20
-
 Drink
 Ice Chocolate
 Pretty good
@@ -22,5 +17,10 @@ Dessert
 Ice Cream
 The Classic
 5.00
+
+MainCourse
+Chicken Noodle
+Gud Soup
+6.50
 
 END

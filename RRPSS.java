@@ -125,7 +125,7 @@ public class RRPSS {
 					Scanner scanner = new Scanner(System.in);
 					String name = scanner.next();
 					System.out.println("Enter pax");
-					int pax = getInput(1,6);
+					int pax = getInput(1,10);
 					if(hasAvailableTable(pax) != -1){
 						createReservation(name,pax);
 					} else {
@@ -154,7 +154,7 @@ public class RRPSS {
 				case 8:
 					rl.ReservationChecker(sm);
 					System.out.println("Enter No. of pax");
-					System.out.println(hasAvailableTable(getInput(1,6)) != -1 ? "Table available" : "No available table");
+					System.out.println(hasAvailableTable(getInput(1,10)) != -1 ? "Table available" : "No available table");
 					break;
 				case 9:
 					System.out.println("Enter reservation ID: ");
@@ -178,12 +178,6 @@ public class RRPSS {
 				case 11:
 					System.exit(0);
 					return;
-				case 12:
-					menu.getMains();
-					menu.getDrinks();
-					menu.getDesserts();
-					menu.getPromotions();
-					break;
 				default:
 					System.out.println("Invalid choice");
 					break;
@@ -205,7 +199,7 @@ public class RRPSS {
 			//get additional info
 			System.out.println("Please enter your phone number: ");
 			long phoneNum = scan.nextLong();
-			System.out.println("Are you a member?");
+			System.out.println("Are you a member? (y/n)");
 			String memS = scan.next(); //y/n
 			boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
 

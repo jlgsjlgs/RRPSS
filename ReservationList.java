@@ -3,7 +3,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 class ReservationList {
-	static final long deadline = 10;
+	static final long deadline = 60;
 	
 	private ArrayList<Reservation> resList;
 	private static int NEXT_RID;
@@ -54,6 +54,7 @@ class ReservationList {
 			}
 		}
 		while (toRemove.size() != 0){
+			sm.unassignTable(getReservation(toRemove.get(0)).gettID());
 			resList.remove(getReservation(toRemove.get(0)));
 			toRemove.remove(0);
 		}
