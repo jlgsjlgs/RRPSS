@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.text.NumberFormat;
 
 class Order {
 
@@ -6,12 +7,14 @@ class Order {
 	private Staff staff;
 	private ArrayList<OrderItem> myOrder;
 	private int tableID;
+	private boolean isMember;
 
-	Order(long orderID, Staff staff, int tableID){
+	Order(long orderID, Staff staff, int tableID, boolean isMember){
 		this.myOrder = new ArrayList<OrderItem>();
 		this.orderID = orderID;
 		this.staff = staff;
 		this.tableID = tableID;
+		this.isMember = isMember;
 	}
 
 	long getOrderID() {
@@ -64,7 +67,7 @@ class Order {
 	void printOrder() {
 		System.out.println("---------------------------------------------------------------");
 		for(OrderItem oItem : myOrder)
-			System.out.println(oItem.getOrderQuantity() +" "+ oItem.getOrderName() +"\t\t" +oItem.price()); 
+			System.out.println(oItem.getOrderQuantity() +" "+ oItem.getOrderName() +"\t\t" + NumberFormat.getCurrencyInstance().format(oItem.price())); 
 		System.out.println("---------------------------------------------------------------");
 	}
 
@@ -72,7 +75,14 @@ class Order {
 		double totalPrice = 0;
 		for(OrderItem oItem : myOrder)
 			totalPrice += oItem.price();
+		
+		if (this.isMember){
+			totalPrice = totalPrice*0.9;
+		}
 		return totalPrice;
 	}
 	
+	boolean getMembership(){
+		return this.isMember;
+	}
 }

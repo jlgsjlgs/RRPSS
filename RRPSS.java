@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
+import java.text.NumberFormat;
 
 public class RRPSS {
 
@@ -14,6 +16,7 @@ public class RRPSS {
 	private static final SeatingManagement sm = new SeatingManagement();
 	private static final ReservationList rl = new ReservationList();
 	private static final ArrayList<Order> orders = new ArrayList<>();
+	private static final HashMap<OrderItem, Integer> salesTracker = new HashMap<>();
 
 
 	/**
@@ -87,14 +90,15 @@ public class RRPSS {
 					}
 					break;
 				case 3:
+
 					createOrder(staff);
 					break;
 				case 4:
-					System.out.println("Enter orderID");
+					System.out.println("Enter order ID");
 					viewOrder(getInput(0,Integer.MAX_VALUE));
 					break;
 				case 5:
-					System.out.println("Enter rID");
+					System.out.println("Enter reservation ID");
 					int orderID = getInput(0,Integer.MAX_VALUE);
 					Order order = null;
 					for(Order o : orders){
@@ -104,7 +108,7 @@ public class RRPSS {
 						}
 					}
 					if(order == null){
-						System.out.println("Invalid OrderID");
+						System.out.println("Invalid Order ID");
 						break;
 					}
 					System.out.println("Editing order");
@@ -130,7 +134,7 @@ public class RRPSS {
 					break;
 				case 7:
 					//edit reservation
-					System.out.println("What's ur rID?");
+					System.out.println("What's ur reservation ID?");
 					Scanner scan = new Scanner(System.in);
 					long rID = scan.nextLong();
 
@@ -152,6 +156,7 @@ public class RRPSS {
 					System.out.println(hasAvailableTable(getInput(1,6)) != -1 ? "Table available" : "No available table");
 					break;
 				case 9:
+					System.out.println("Enter reservation ID: ");
 					orderID = getInput(0,Integer.MAX_VALUE);
 					order = null;
 					for(Order o : orders){
@@ -161,7 +166,7 @@ public class RRPSS {
 						}
 					}
 					if(order == null){
-						System.out.println("Invalid OrderID");
+						System.out.println("Invalid Order ID");
 						break;
 					}
 					printOrderInvoice(order);
@@ -198,10 +203,10 @@ public class RRPSS {
 
 			//get additional info
 			System.out.println("Please enter your phone number: ");
-				long phoneNum = scan.nextLong();
+			long phoneNum = scan.nextLong();
 			System.out.println("Are you a member?");
-				String memS = scan.next(); //y/n
-				boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
+			String memS = scan.next(); //y/n
+			boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
 
 			// System.out.println("Enter date in YYYY-MM-DD format");
 			// LocalDate date;
@@ -268,7 +273,7 @@ public class RRPSS {
 		if(hasReservation(rID)){
 			Reservation reservation = rl.getReservation(rID);
 			int table = sm.getAvailTable(reservation.getPax());
-			orders.add(new Order(rID, staff, table));//is int or long? rID is long but orderID is int
+			orders.add(new Order(rID, staff, table, reservation.getMembership()));//is int or long? rID is long but orderID is int
 			sm.assignTable(table);
 			reservation.settID(table);
 		}
@@ -429,26 +434,49 @@ public class RRPSS {
 	//check out
 
 	static void printOrderInvoice(Order order) {
+		System.out.println("---------------------------------------------------------------");
 		System.out.println("RESTAURANT NAME");
-		System.out.println("-----------------");
-		System.out.println("Server: "+order.getStaff()+"\t\t"+LocalDate.now().toString());
-		System.out.println("Table: "+order.getTableID()+"\t\t"+LocalTime.now().toString());
-		System.out.println("-----------------");
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("Server: "+((Staff)order.getStaff()).getName()+"\t\t"+LocalDate.now());
+		System.out.println("Table: "+order.getTableID()+"\t\t\t\t"+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
 		for(OrderItem item : order.getMyOrder()){
-			System.out.println(item.getOrderQuantity()+"\t"+item.getOrderName()+"\t\t"+item.price());
+			order.printOrder();
+			addToDailySales(item);
 		}
-		System.out.println("-----------------");
-		System.out.println("\t\tSubtotal:\t"+order.totalPrice());
-		System.out.println("\t\tGST:\t"+order.totalPrice()*0.07);
-		System.out.println("\t\tTotal:\t"+order.totalPrice()*1.07);
-		System.out.println("-----------------");
+		if (order.getMembership()){
+			System.out.println("10% discount given for membership!");
+		}
+		System.out.println("\tSubtotal:\t"+ NumberFormat.getCurrencyInstance().format(order.totalPrice()));
+		System.out.println("\tService Charge:\t"+ NumberFormat.getCurrencyInstance().format(order.totalPrice()*0.1));
+		System.out.println("\tGST:\t\t"+ NumberFormat.getCurrencyInstance().format((order.totalPrice()*1.1)*0.07));
+		System.out.println("\tTotal:\t\t"+ NumberFormat.getCurrencyInstance().format((order.totalPrice()*0.1+ order.totalPrice()*1.1*0.07+order.totalPrice())));
+		System.out.println("---------------------------------------------------------------");
 	}
 
 	//wrapping up
 
 	static void printSaleRevenue() {
-		// TODO - implement RRSPSS.printSaleRevenue
-		throw new UnsupportedOperationException();
+		double total=0;
+		System.out.println("Sales Revenue Report for " + LocalDate.now());
+		System.out.println("---------------------------------------------------------------");
+
+		for (OrderItem tempItem : salesTracker.keySet()){
+			System.out.println(tempItem.getOrderName() + "\t\t"+ salesTracker.get(tempItem));
+		}
+
+		for (Order tempOrder : orders){
+			total += tempOrder.totalPrice();
+		}
+		System.out.println("---------------------------------------------------------------");
+		System.out.println("Total revenue: " + NumberFormat.getCurrencyInstance().format(total));		
 	}
 
+	static void addToDailySales(OrderItem curItem){
+		if (!(salesTracker.containsKey(curItem))){
+			salesTracker.put(curItem, curItem.getOrderQuantity());
+		} else {
+			int existingNum = salesTracker.get(curItem);
+			salesTracker.put(curItem, curItem.getOrderQuantity() + existingNum);
+		}
+	}
 }
