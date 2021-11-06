@@ -1,4 +1,4 @@
-abstract class MenuItem implements Item{
+class MenuItem implements Item{
     private String name;
     private String description;
     private double price;
