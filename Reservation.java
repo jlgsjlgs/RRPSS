@@ -54,15 +54,4 @@ class Reservation {
 	void settID(int tID) {
 		this.tID = tID;
 	}
-
-	// int allocatedReserveTable(SeatingManagement sm) { //if returns -1, no table resrved, else, reservation is successful + which table was allocated
-	// 	int tID = sm.getAvailTable(getPax());
-	// 	if(tID != -1)
-	// 		sm.reserveATable(tID);
-			
-	// 	else
-	// 		System.out.println("No tables with your current pax available atm, try reserving again tomorrow or put ut child at home");
-	// 		//also in main, delete this reservation
-	// 	return tID;
-	// }
 }

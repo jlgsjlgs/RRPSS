@@ -18,7 +18,6 @@ public class RRPSS {
 	private static final ArrayList<Order> orders = new ArrayList<>();
 	private static final HashMap<OrderItem, Integer> salesTracker = new HashMap<>();
 
-
 	/**
 	 * Helper function to get int input that is valid and within range from user
 	 * @param min Minimum value
@@ -90,7 +89,7 @@ public class RRPSS {
 					}
 					break;
 				case 3:
-
+					rl.ReservationChecker(sm);
 					createOrder(staff);
 					break;
 				case 4:
@@ -121,6 +120,7 @@ public class RRPSS {
 					}
 					break;
 				case 6:
+					rl.ReservationChecker(sm);
 					System.out.println("Enter customer name");
 					Scanner scanner = new Scanner(System.in);
 					String name = scanner.next();
@@ -137,7 +137,7 @@ public class RRPSS {
 					System.out.println("What's ur reservation ID?");
 					Scanner scan = new Scanner(System.in);
 					long rID = scan.nextLong();
-
+					rl.ReservationChecker(sm);
 					if(hasReservation(rID)){
 						Reservation reservation = rl.getReservation(rID);
 						System.out.println("Reservation of "+reservation.getPax()+" pax by "+reservation.getCustName());
@@ -149,9 +149,10 @@ public class RRPSS {
 							System.out.println("Reservation removed");
 						}
 					}else
-						System.out.println("No such reservation");
+						System.out.println("Your reservation has either expired or does not exist!");
 					break;
 				case 8:
+					rl.ReservationChecker(sm);
 					System.out.println("Enter No. of pax");
 					System.out.println(hasAvailableTable(getInput(1,6)) != -1 ? "Table available" : "No available table");
 					break;
@@ -208,30 +209,39 @@ public class RRPSS {
 			String memS = scan.next(); //y/n
 			boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
 
-			// System.out.println("Enter date in YYYY-MM-DD format");
-			// LocalDate date;
-			// LocalTime time;
-			// while(true){
-			// 	try {
-			// 		date = LocalDate.parse(scan.next());
-			// 		break;
-			// 	}catch (DateTimeParseException e){
-			// 		System.out.println("Invalid date");
-			// 	}
-			// }
-			// System.out.println("Enter time in HH:MM:SS format");
-			// while(true){
-			// 	try {
-			// 		time = LocalTime.parse(scan.next());
-			// 		break;
-			// 	}catch (DateTimeParseException e){
-			// 		System.out.println("Invalid time");
-			// 	}
-			// }
+			System.out.println("Enter date in YYYY-MM-DD format");
+			LocalDate date;
+			LocalTime time;
+			while(true){
+				try {
+					date = LocalDate.parse(scan.next());
+					if (date.isBefore(LocalDate.now())){
+						System.out.println("Please enter a valid date!");
+						continue;
+					} else {
+						break;
+					}
+				}catch (DateTimeParseException e){
+					System.out.println("Invalid date format");
+				}
+			}
+
+			System.out.println("Enter time in HH:MM (24H format)");
+			while(true){
+				try {
+					time = LocalTime.parse(scan.next());
+					if ((LocalTime.now().isAfter(time)) && (date.equals(LocalDate.now()))){
+						System.out.println("Please enter a valid time!");
+						continue;
+					} else {
+						break;
+					}
+				}catch (DateTimeParseException e){
+					System.out.println("Invalid time format");
+				}
+			}
 
 			//create reservation
-			LocalDate date = LocalDate.parse("2021-11-07");
-			LocalTime time = LocalTime.parse("13:00:00");
 			rl.addReservation(name,pax, phoneNum, date, time, mem, curTableID);
 
 			sm.reserveATable(curTableID);
@@ -276,6 +286,8 @@ public class RRPSS {
 			orders.add(new Order(rID, staff, table, reservation.getMembership()));//is int or long? rID is long but orderID is int
 			sm.assignTable(table);
 			reservation.settID(table);
+		} else {
+			System.out.println("Your reservation has either expired or does not exist!");
 		}
 		
 	}
@@ -434,23 +446,7 @@ public class RRPSS {
 	//check out
 
 	static void printOrderInvoice(Order order) {
-		System.out.println("---------------------------------------------------------------");
-		System.out.println("RESTAURANT NAME");
-		System.out.println("---------------------------------------------------------------");
-		System.out.println("Server: "+((Staff)order.getStaff()).getName()+"\t\t"+LocalDate.now());
-		System.out.println("Table: "+order.getTableID()+"\t\t\t\t"+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-		for(OrderItem item : order.getMyOrder()){
-			order.printOrder();
-			addToDailySales(item);
-		}
-		if (order.getMembership()){
-			System.out.println("10% discount given for membership!");
-		}
-		System.out.println("\tSubtotal:\t"+ NumberFormat.getCurrencyInstance().format(order.totalPrice()));
-		System.out.println("\tService Charge:\t"+ NumberFormat.getCurrencyInstance().format(order.totalPrice()*0.1));
-		System.out.println("\tGST:\t\t"+ NumberFormat.getCurrencyInstance().format((order.totalPrice()*1.1)*0.07));
-		System.out.println("\tTotal:\t\t"+ NumberFormat.getCurrencyInstance().format((order.totalPrice()*0.1+ order.totalPrice()*1.1*0.07+order.totalPrice())));
-		System.out.println("---------------------------------------------------------------");
+		CheckOut.doCheckOut(order, rl, sm);
 	}
 
 	//wrapping up

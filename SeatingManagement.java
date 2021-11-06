@@ -23,7 +23,7 @@ class SeatingManagement {
 			myTables.add(i, new Table(i+1, paxPerTable));
 
 			if((i+1) % 4 == 0)
-				paxPerTable++;
+				paxPerTable+=2;
 		}
 	}
 

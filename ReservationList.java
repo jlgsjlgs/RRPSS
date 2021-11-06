@@ -3,6 +3,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 class ReservationList {
+	static final long deadline = 10;
 	
 	private ArrayList<Reservation> resList;
 	private static int NEXT_RID;
@@ -31,7 +32,6 @@ class ReservationList {
 		}
 		else 
 			System.out.println("Error in removing reservation. No such reservation");
-		
 	}
 
 	Reservation getReservation(long rID){
@@ -40,5 +40,22 @@ class ReservationList {
 				return res;
 		}
 		return null;
+	}
+
+	void ReservationChecker(SeatingManagement sm){
+		ArrayList <Long> toRemove = new ArrayList<Long>();
+		int i=0;
+		for (Reservation tempReservation : resList){
+			if (tempReservation.getReservationDate().isBefore(LocalDate.now())){
+				toRemove.add(tempReservation.getrID());
+			} 
+			if ((LocalTime.now().isAfter(tempReservation.getReservationTime().plusSeconds(deadline))) && (tempReservation.getReservationDate().equals(LocalDate.now()))){
+				toRemove.add(tempReservation.getrID());
+			}
+		}
+		while (toRemove.size() != 0){
+			resList.remove(getReservation(toRemove.get(0)));
+			toRemove.remove(0);
+		}
 	}
 }
