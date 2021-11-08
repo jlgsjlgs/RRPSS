@@ -41,7 +41,7 @@ class Order {
 	void addItemToOrder(Item item, int quantity) {
 		
 		for(OrderItem oItem : myOrder){
-			if(oItem.getOrderName() == item.getName()){ //if item already exists in myOrder
+			if(oItem.getOrderName().equals(item.getName())){ //if item already exists in myOrder
 				oItem.addMore(quantity);
 				return;
 			}
@@ -53,14 +53,13 @@ class Order {
 	boolean removeItemFromOrder(Item item) {
 		
 		for(OrderItem oItem : myOrder){
-			if(oItem.getOrderName() == item.getName()){ //found order item
+			if(oItem.getOrderName().equals(item.getName())){ //found order item
 				myOrder.remove(oItem); //delete item from myOrder arraylist
 				return true;
 			}
 		}
 		
 		//else if item not found in myOrder
-		System.out.println("This item cannot be removed since it doesn't exist in your order.");
 		return false;
 	}
 

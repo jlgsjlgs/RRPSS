@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.HashMap;
-import java.time.format.DateTimeFormatter;
 import java.text.NumberFormat;
 
 public class RRPSS {
@@ -25,6 +24,17 @@ public class RRPSS {
 	 * @return input
 	 */
 	private static int getInput(Integer min,Integer max){
+		return getInput(min,max,null);
+	}
+
+	/**
+	 * Helper function to get int input that is valid and within range from user
+	 * @param min Minimum value
+	 * @param max Maximum value
+	 * @param outOfRangePrompt   Prompt to print if out of range, if null prints "Must be within the range of "+min+" and "+max+", try again"
+	 * @return input
+	 */
+	private static int getInput(Integer min,Integer max,String outOfRangePrompt){
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
 		do {
@@ -34,7 +44,7 @@ public class RRPSS {
 				System.out.println("Invalid number, try again");
 			}
 			if(choice < min || choice > max){
-				System.out.println("Must be within the range of "+min+" and "+max+", try again");
+				System.out.println(outOfRangePrompt == null ? "Must be within the range of "+min+" and "+max+", try again" : outOfRangePrompt);
 			}else
 				break;
 		}while (true);
@@ -61,9 +71,8 @@ public class RRPSS {
 			System.out.println("9. Print order invoice");
 			System.out.println("10. Print sales revenue report");
 			System.out.println("11. Exit");
-			System.out.println("12. printitemsinmenu");
 			System.out.println("Enter choice");
-			switch (getInput(1,12)){
+			switch (getInput(1,11)){
 				case 1:
 					System.out.println("Editing menu");
 					System.out.println("1. Add");
@@ -89,7 +98,7 @@ public class RRPSS {
 					}
 					break;
 				case 3:
-					rl.ReservationChecker(sm);
+					rl.removeInvalids(sm);
 					createOrder(staff);
 					break;
 				case 4:
@@ -97,7 +106,7 @@ public class RRPSS {
 					viewOrder(getInput(0,Integer.MAX_VALUE));
 					break;
 				case 5:
-					System.out.println("Enter reservation ID");
+					System.out.println("Enter order ID");
 					int orderID = getInput(0,Integer.MAX_VALUE);
 					Order order = null;
 					for(Order o : orders){
@@ -120,13 +129,12 @@ public class RRPSS {
 					}
 					break;
 				case 6:
-					rl.ReservationChecker(sm);
+					rl.removeInvalids(sm);
 					System.out.println("Enter customer name");
-					Scanner scanner = new Scanner(System.in);
-					String name = scanner.next();
+					String name = sc.next();
 					System.out.println("Enter pax");
 					int pax = getInput(1,10);
-					if(hasAvailableTable(pax) != -1){
+					if(getAvailableTable(pax) != -1){
 						createReservation(name,pax);
 					} else {
 						System.out.println("No available table");
@@ -135,9 +143,8 @@ public class RRPSS {
 				case 7:
 					//edit reservation
 					System.out.println("What's ur reservation ID?");
-					Scanner scan = new Scanner(System.in);
-					long rID = scan.nextLong();
-					rl.ReservationChecker(sm);
+					long rID = sc.nextLong();
+					rl.removeInvalids(sm);
 					if(hasReservation(rID)){
 						Reservation reservation = rl.getReservation(rID);
 						System.out.println("Reservation of "+reservation.getPax()+" pax by "+reservation.getCustName());
@@ -146,15 +153,14 @@ public class RRPSS {
 						System.out.println("2. Back");
 						if(getInput(1,2) == 1){
 							removeReservation(rID);
-							System.out.println("Reservation removed");
 						}
 					}else
 						System.out.println("Your reservation has either expired or does not exist!");
 					break;
 				case 8:
-					rl.ReservationChecker(sm);
+					rl.removeInvalids(sm);
 					System.out.println("Enter No. of pax");
-					System.out.println(hasAvailableTable(getInput(1,10)) != -1 ? "Table available" : "No available table");
+					System.out.println(getAvailableTable(getInput(1,10)) != -1 ? "Table available" : "No available table");
 					break;
 				case 9:
 					System.out.println("Enter reservation ID: ");
@@ -192,7 +198,7 @@ public class RRPSS {
 
 		//check if table available
 		// if yes then actually creates reservation , long phoneNum, Boolean mem
-		int curTableID= hasAvailableTable(pax);
+		int curTableID= getAvailableTable(pax);
 
 		if(curTableID != -1){
 
@@ -211,7 +217,6 @@ public class RRPSS {
 					date = LocalDate.parse(scan.next());
 					if (date.isBefore(LocalDate.now())){
 						System.out.println("Please enter a valid date!");
-						continue;
 					} else {
 						break;
 					}
@@ -226,7 +231,6 @@ public class RRPSS {
 					time = LocalTime.parse(scan.next());
 					if ((LocalTime.now().isAfter(time)) && (date.equals(LocalDate.now()))){
 						System.out.println("Please enter a valid time!");
-						continue;
 					} else {
 						break;
 					}
@@ -257,8 +261,8 @@ public class RRPSS {
 		sm.unassignTable(tempReservation.gettID());
 	}
 
-	//check table
-	static int hasAvailableTable(int pax) {
+	//do we need this method?
+	static int getAvailableTable(int pax) {
 		return sm.getAvailTable(pax);
 	}
 
@@ -267,12 +271,12 @@ public class RRPSS {
 
 	static void createOrder(Staff staff) {
 		// check if there's reservation, ie has valid rID, yes-> create order, else deny
-		
+
 
 		//ask for rID
 		Scanner scan = new Scanner(System.in);
-		System.out.println("What's ur rID?");
-		long rID = Long.valueOf(scan.nextLine());
+		System.out.println("What's ur reservation ID?");
+		long rID = scan.nextLong();
 
 		if(hasReservation(rID)){
 			Reservation reservation = rl.getReservation(rID);
@@ -300,8 +304,7 @@ public class RRPSS {
 		HashMap<String, ArrayList<MenuItem>> tempHash = menu.getHashMenu();
 		ArrayList<Promotional> tempPromo = menu.getPromoArrayList();
 		boolean stillAdding = true;
-		int userInput, numitems=0;
-		Scanner sc = new Scanner(System.in);
+		int userInput, numitems;
 
 		while (stillAdding){
 			System.out.println("1. Mains");
@@ -314,54 +317,38 @@ public class RRPSS {
 				case 1:
 					menu.getMains();
 					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > menu.getNumMains())){
-						System.out.println("Enter quantity");
-						numitems = Integer.valueOf(sc.nextLine());
-						order.addItemToOrder(tempHash.get("MainCourse").get(userInput-1), numitems);
-						System.out.println("MainCourse added to order!");
-					} else {
-						System.out.println("Error! MainCourse does not exist.");
-					}
+					userInput = getInput(1,menu.getNumMains(),"Error! MainCourse does not exist. Please try again");
+					System.out.println("Enter quantity");
+					numitems = getInput(1,Integer.MAX_VALUE);
+					order.addItemToOrder(tempHash.get("MainCourse").get(userInput-1), numitems);
+					System.out.println("MainCourse added to order!");
 					break;
 				case 2:
 					menu.getDrinks();
 					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > menu.getNumDrinks())){
-						System.out.println("Enter quantity");
-						numitems = Integer.valueOf(sc.nextLine());
-						order.addItemToOrder(tempHash.get("Drink").get(userInput-1), numitems);
-						System.out.println("Drink added to order!");
-					} else {
-						System.out.println("Error! Drink does not exist.");
-					}
+					userInput = getInput(1,menu.getNumDrinks(),"Error! Drink does not exist. Please try again");
+					System.out.println("Enter quantity");
+					numitems = getInput(1,Integer.MAX_VALUE);
+					order.addItemToOrder(tempHash.get("Drink").get(userInput-1), numitems);
+					System.out.println("Drink added to order!");
 					break;
 				case 3:
 					menu.getDesserts();
 					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > menu.getNumDessert())){
-						System.out.println("Enter quantity");
-						numitems = Integer.valueOf(sc.nextLine());
-						order.addItemToOrder(tempHash.get("Dessert").get(userInput-1), numitems);
-						System.out.println("Dessert added to order!");
-					} else {
-						System.out.println("Error! Dessert does not exist.");
-					}
+					userInput = getInput(1,menu.getNumDessert(),"Error! Dessert does not exist. Please try again");
+					System.out.println("Enter quantity");
+					numitems = getInput(1,Integer.MAX_VALUE);
+					order.addItemToOrder(tempHash.get("Dessert").get(userInput-1), numitems);
+					System.out.println("Dessert added to order!");
 					break;
 				case 4:
 					menu.getPromotions();
 					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > tempPromo.size())){
-						System.out.println("Enter quantity");
-						numitems = Integer.valueOf(sc.nextLine());
-						order.addItemToOrder(tempPromo.get(userInput-1), numitems);
-						System.out.println("Item added to order!");
-					} else {
-						System.out.println("Error! Item does not exist.");
-					}
+					userInput = getInput(1, tempPromo.size(),"Error! Promotion does not exist. Please try again");
+					System.out.println("Enter quantity");
+					numitems = getInput(1,Integer.MAX_VALUE);
+					order.addItemToOrder(tempPromo.get(userInput-1), numitems);
+					System.out.println("Item added to order!");
 					break;
 				case 5: stillAdding = false; break;
 			}
@@ -372,8 +359,7 @@ public class RRPSS {
 		HashMap<String, ArrayList<MenuItem>> tempHash = menu.getHashMenu();
 		ArrayList<Promotional> tempPromo = menu.getPromoArrayList();
 		boolean stillRemoving = true;
-		int userInput, numitems=0;
-		Scanner sc = new Scanner(System.in);
+		int userInput;
 
 		if (order.getOrderSize() == 0){
 			System.out.println("Order is empty!");
@@ -390,46 +376,34 @@ public class RRPSS {
 				case 1:
 					menu.getMains();
 					System.out.println("Which item do you want to remove?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > menu.getNumMains())){
-						order.removeItemFromOrder(tempHash.get("MainCourse").get(userInput-1));
-						System.out.println("MainCourse removed from order!");
-					} else {
-						System.out.println("Error! MainCourse does not exist.");
-					}
+					userInput = getInput(1,menu.getNumMains(),"Error! MainCourse does not exist. Please try again");
+					System.out.println(order.removeItemFromOrder(tempHash.get("MainCourse").get(userInput-1)) ?
+							"MainCourse removed from order!" :
+							"This item cannot be removed since it doesn't exist in your order.");
 					break;
 				case 2:
 					menu.getDrinks();
-					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > menu.getNumDrinks())){
-						order.removeItemFromOrder(tempHash.get("Drink").get(userInput-1));
-						System.out.println("Drink removed from order!");
-					} else {
-						System.out.println("Error! Drink does not exist.");
-					}
+					System.out.println("Which item do you want to remove?");
+					userInput = getInput(1,menu.getNumDrinks(),"Error! Drink does not exist. Please try again");
+					System.out.println(order.removeItemFromOrder(tempHash.get("Drink").get(userInput-1)) ?
+							"Drink removed from order!" :
+							"This item cannot be removed since it doesn't exist in your order.");
 					break;
 				case 3:
 					menu.getDesserts();
-					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > menu.getNumMains())){
-						order.removeItemFromOrder(tempHash.get("Dessert").get(userInput-1));
-						System.out.println("Dessert removed from order!");
-					} else {
-						System.out.println("Error! Dessert does not exist.");
-					}
+					System.out.println("Which item do you want to remove?");
+					userInput = getInput(1,menu.getNumDessert(),"Error! Dessert does not exist. Please try again");
+					System.out.println(order.removeItemFromOrder(tempHash.get("Dessert").get(userInput-1)) ?
+							"Dessert removed from order!" :
+							"This item cannot be removed since it doesn't exist in your order.");
 					break;
 				case 4:
 					menu.getPromotions();
-					System.out.println("Which item do you want to add?");
-					userInput = Integer.valueOf(sc.nextLine());
-					if (!(userInput <= 0 || userInput > tempPromo.size())){
-						order.removeItemFromOrder(tempPromo.get(userInput-1));
-						System.out.println("Promotional item removed from order!");
-					} else {
-						System.out.println("Error! Promotional item does not exist.");
-					}
+					System.out.println("Which item do you want to remove?");
+					userInput = getInput(1,tempPromo.size(),"Error! Promotional item does not exist. Please try again");
+					System.out.println(order.removeItemFromOrder(tempPromo.get(userInput-1)) ?
+							"Promotional item removed from order!" :
+							"This item cannot be removed since it doesn't exist in your order.");
 					break;
 				case 5: stillRemoving = false; break;
 			}

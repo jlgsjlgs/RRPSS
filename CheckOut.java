@@ -9,19 +9,20 @@ class CheckOut {
 		System.out.println("---------------------------------------------------------------");
 		System.out.println("RESTAURANT NAME");
 		System.out.println("---------------------------------------------------------------");
-		System.out.println("Server: "+((Staff)myOrder.getStaff()).getName()+"\t\t"+LocalDate.now());
+		System.out.println("Server: "+ myOrder.getStaff().getName()+"\t\t"+LocalDate.now());
 		System.out.println("Table: "+myOrder.getTableID()+"\t\t\t\t"+LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+		myOrder.printOrder();
 		for(OrderItem item : myOrder.getMyOrder()){
-			myOrder.printOrder();
 			RRPSS.addToDailySales(item);
 		}
 		if (myOrder.getMembership()){
 			System.out.println("10% discount given for membership!");
 		}
-		System.out.println("\tSubtotal:\t"+ NumberFormat.getCurrencyInstance().format(myOrder.totalPrice()));
-		System.out.println("\tService Charge:\t"+ NumberFormat.getCurrencyInstance().format(myOrder.totalPrice()*0.1));
-		System.out.println("\tGST:\t\t"+ NumberFormat.getCurrencyInstance().format((myOrder.totalPrice()*1.1)*0.07));
-		System.out.println("\tTotal:\t\t"+ NumberFormat.getCurrencyInstance().format((myOrder.totalPrice()*0.1+ myOrder.totalPrice()*1.1*0.07+myOrder.totalPrice())));
+		double price = myOrder.totalPrice(),serviceCharge = price * 0.1,gst = (price+serviceCharge)*0.07;
+		System.out.println("\tSubtotal:\t"+ NumberFormat.getCurrencyInstance().format(price));
+		System.out.println("\tService Charge:\t"+ NumberFormat.getCurrencyInstance().format(serviceCharge));
+		System.out.println("\tGST:\t\t"+ NumberFormat.getCurrencyInstance().format(gst));
+		System.out.println("\tTotal:\t\t"+ NumberFormat.getCurrencyInstance().format(price+serviceCharge+gst));
 		System.out.println("---------------------------------------------------------------");
 
 		rl.removeReservation(myOrder.getOrderID());

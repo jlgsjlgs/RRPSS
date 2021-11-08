@@ -3,9 +3,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 class ReservationList {
-	static final long deadline = 60;
+	private static final long REMOVE_AFTER_SECONDS = 60;
 	
-	private ArrayList<Reservation> resList;
+	private final ArrayList<Reservation> resList;
 	private static int NEXT_RID;
 	
 	ReservationList(){
@@ -27,10 +27,8 @@ class ReservationList {
 
 	void removeReservation(long rID) {
 		if (resList.removeIf(res -> (res.getrID() == rID))){
-			//have to delete res obj??
 			System.out.println("Your reservation " + rID+ "is successfully removed");
-		}
-		else 
+		} else
 			System.out.println("Error in removing reservation. No such reservation");
 	}
 
@@ -42,14 +40,14 @@ class ReservationList {
 		return null;
 	}
 
-	void ReservationChecker(SeatingManagement sm){
+	void removeInvalids(SeatingManagement sm){
 		ArrayList <Long> toRemove = new ArrayList<Long>();
 		int i=0;
 		for (Reservation tempReservation : resList){
 			if (tempReservation.getReservationDate().isBefore(LocalDate.now())){
 				toRemove.add(tempReservation.getrID());
 			} 
-			if ((LocalTime.now().isAfter(tempReservation.getReservationTime().plusSeconds(deadline))) && (tempReservation.getReservationDate().equals(LocalDate.now()))){
+			if ((LocalTime.now().isAfter(tempReservation.getReservationTime().plusSeconds(REMOVE_AFTER_SECONDS))) && (tempReservation.getReservationDate().equals(LocalDate.now()))){
 				toRemove.add(tempReservation.getrID());
 			}
 		}
