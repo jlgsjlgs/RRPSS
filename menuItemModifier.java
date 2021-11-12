@@ -71,11 +71,16 @@ public class menuItemModifier {
                 break;
             case 3:
                 System.out.println("Enter new price: ");
-                double newPrice = Double.valueOf(sc.nextLine());
-                toChange.setPrice(newPrice);
+                try {
+                    double newPrice = Double.parseDouble(sc.nextLine());
+                    toChange.setPrice(newPrice);
+                    break; 
+                } catch (NumberFormatException e){
+                    System.out.println("Error! Input is not a valid price!");
+                }
                 break;
             default:
-                System.out.println("Error!");
+                System.out.println("Error! Invalid option was chosen!");
         }
     }
 

@@ -9,10 +9,6 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class FileCreator {
-
-    private FileCreator(){
-        //prevent instantiation
-    }
     
     static void outputReport(ArrayList<Order> orders, HashMap<OrderItem, Integer> salesTracker){
         try {

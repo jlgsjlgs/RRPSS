@@ -50,7 +50,7 @@ class Menu {
                 holder = "Dessert";
                 break;
             default:
-                System.out.println("Error!");
+                System.out.println("Error! Invalid type of item chosen");
                 flag = false;
                 break;
         }
@@ -60,7 +60,7 @@ class Menu {
             itemNum = Integer.valueOf(sc.nextLine());
 
             if (itemNum > myMenu.get(holder).size() || itemNum <= 0){
-                System.out.println("Error!");
+                System.out.println("Error! Invalid item was chosen!");
             } else {
                 this.menuMod.updateMenuItem(this.myMenu, holder, itemNum);
             }

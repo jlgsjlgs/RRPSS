@@ -10,7 +10,7 @@ import java.util.*;
 
 class SeatingManagement {
 
-	public static final int NUMBER_OF_TABLES = 20;
+	public static final int NUMBER_OF_TABLES = 8;
 
 	private ArrayList <Table> myTables = new ArrayList <Table>();
 	

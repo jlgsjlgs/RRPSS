@@ -16,6 +16,7 @@ public class RRPSS {
 	private static final ReservationList rl = new ReservationList();
 	private static final ArrayList<Order> orders = new ArrayList<>();
 	private static final HashMap<OrderItem, Integer> salesTracker = new HashMap<>();
+        private static final FileCreator myFileCreator = new FileCreator();
 
 	/**
 	 * Helper function to get int input that is valid and within range from user
@@ -182,8 +183,8 @@ public class RRPSS {
 					printSaleRevenue();
 					break;
 				case 11:
-					FileCreator.outputReport(orders, salesTracker);
-					menu.outputNewMenuFile();
+                                        myFileCreator.outputReport(orders, salesTracker);
+                                        menu.outputNewMenuFile();
 					System.exit(0);
 					return;
 				default:
@@ -318,10 +319,10 @@ public class RRPSS {
 			switch (getInput(1,5)){
 				case 1:
 					menu.getMains();
-					if (menu.getNumMains() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
+                                        if (menu.getNumMains() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1,menu.getNumMains(),"Error! MainCourse does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -331,10 +332,10 @@ public class RRPSS {
 					break;
 				case 2:
 					menu.getDrinks();
-					if (menu.getNumDrinks() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
+                                        if (menu.getNumDrinks() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1,menu.getNumDrinks(),"Error! Drink does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -344,10 +345,10 @@ public class RRPSS {
 					break;
 				case 3:
 					menu.getDesserts();
-					if (menu.getNumDessert() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
+                                        if (menu.getNumDessert() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1,menu.getNumDessert(),"Error! Dessert does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -357,10 +358,10 @@ public class RRPSS {
 					break;
 				case 4:
 					menu.getPromotions();
-					if (menu.getNumPromotion() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
+                                        if (menu.getNumPromotion() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1, tempPromo.size(),"Error! Promotion does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -393,10 +394,6 @@ public class RRPSS {
 			switch (getInput(1,5)){
 				case 1:
 					menu.getMains();
-					if (menu.getNumMains() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
 					System.out.println("Which item do you want to remove?");
 					userInput = getInput(1,menu.getNumMains(),"Error! MainCourse does not exist. Please try again");
 					System.out.println(order.removeItemFromOrder(tempHash.get("MainCourse").get(userInput-1)) ?
@@ -405,10 +402,6 @@ public class RRPSS {
 					break;
 				case 2:
 					menu.getDrinks();
-					if (menu.getNumDrinks() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
 					System.out.println("Which item do you want to remove?");
 					userInput = getInput(1,menu.getNumDrinks(),"Error! Drink does not exist. Please try again");
 					System.out.println(order.removeItemFromOrder(tempHash.get("Drink").get(userInput-1)) ?
@@ -417,10 +410,6 @@ public class RRPSS {
 					break;
 				case 3:
 					menu.getDesserts();
-					if (menu.getNumDessert() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
 					System.out.println("Which item do you want to remove?");
 					userInput = getInput(1,menu.getNumDessert(),"Error! Dessert does not exist. Please try again");
 					System.out.println(order.removeItemFromOrder(tempHash.get("Dessert").get(userInput-1)) ?
@@ -429,10 +418,6 @@ public class RRPSS {
 					break;
 				case 4:
 					menu.getPromotions();
-					if (menu.getNumPromotion() == 0){
-						System.out.println("No items under this category!");
-						break;
-					}
 					System.out.println("Which item do you want to remove?");
 					userInput = getInput(1,tempPromo.size(),"Error! Promotional item does not exist. Please try again");
 					System.out.println(order.removeItemFromOrder(tempPromo.get(userInput-1)) ?
