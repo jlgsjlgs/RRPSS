@@ -27,7 +27,7 @@ class ReservationList {
 
 	void removeReservation(long rID) {
 		if (resList.removeIf(res -> (res.getrID() == rID))){
-			System.out.println("Your reservation " + rID+ "is successfully removed");
+			System.out.println("Your reservation, reservationID =  " + rID+ ", is successfully removed");
 		} else
 			System.out.println("Error in removing reservation. No such reservation");
 	}

@@ -1,6 +1,5 @@
 
 import java.util.Scanner;
-import java.beans.AppletInitializer;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,7 @@ public class menuReader {
     public HashMap<String, ArrayList<MenuItem>> readMenuFile(){
         HashMap<String, ArrayList<MenuItem>> tempMenu = new HashMap<String, ArrayList<MenuItem>>();
         Scanner filescanner = new Scanner(System.in);
-        String filename = "testitems.txt";
+        String filename = "MenuItems.txt";
 		InputStream is = this.getClass().getResourceAsStream(filename);
         
         try (Scanner filescan = new Scanner(is)){

@@ -19,8 +19,4 @@ public class ReadFile {
 	InputStream getIS() {
 		return is;
 	}
-	
-	public static void main(String[] args) {
-	}
-
 }

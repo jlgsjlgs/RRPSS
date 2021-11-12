@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.io.InputStream;
 
 class StaffRoster {
-	ArrayList<Staff> availStaff;
+	private ArrayList<Staff> availStaff;
 	
 	StaffRoster(){
 		this.availStaff = new ArrayList<>();
@@ -52,17 +52,13 @@ void showStaff(){
 	}
 }
 
-Staff getStaff() { 
+Staff getStaff(int pickStaff) { 
     // Display All Staff Names 
-    Scanner sc = new Scanner(System.in); 
-    System.out.println("*******************************************"); 
-    for (int i = 1; i <= availStaff.size(); i++) { 
-     System.out.println(i + ". " + availStaff.get(i-1).getName()); 
-     System.out.println("i = " + i); 
-    } 
-    System.out.println("Pick Staff:"); 
-    int pickStaff = sc.nextInt() - 1; 
     Staff chosenStaff = availStaff.get(pickStaff); 
     return chosenStaff; 
    }
+
+int getRosterSize(){
+    return this.availStaff.size();
+}
 }

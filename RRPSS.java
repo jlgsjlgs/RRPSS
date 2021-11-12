@@ -16,6 +16,7 @@ public class RRPSS {
 	private static final ReservationList rl = new ReservationList();
 	private static final ArrayList<Order> orders = new ArrayList<>();
 	private static final HashMap<OrderItem, Integer> salesTracker = new HashMap<>();
+        private static final FileCreator myFileCreator = new FileCreator();
 
 	/**
 	 * Helper function to get int input that is valid and within range from user
@@ -55,8 +56,8 @@ public class RRPSS {
 		Scanner sc = new Scanner(System.in);
 		roster.showStaff();
 		System.out.println("Identify yourself");
-		int id = getInput(1,roster.availStaff.size());
-		Staff staff = roster.availStaff.get(id-1);
+                int holderstaffinput = getInput(1, roster.getRosterSize());
+		Staff staff = roster.getStaff(holderstaffinput-1);
 		System.out.println("Welcome, "+staff.getName()+" ("+staff.getJobTitle()+")");
 		while(true) {
 			System.out.println();
@@ -182,6 +183,8 @@ public class RRPSS {
 					printSaleRevenue();
 					break;
 				case 11:
+                                        myFileCreator.outputReport(orders, salesTracker);
+                                        menu.outputNewMenuFile();
 					System.exit(0);
 					return;
 				default:
@@ -316,6 +319,10 @@ public class RRPSS {
 			switch (getInput(1,5)){
 				case 1:
 					menu.getMains();
+                                        if (menu.getNumMains() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1,menu.getNumMains(),"Error! MainCourse does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -325,6 +332,10 @@ public class RRPSS {
 					break;
 				case 2:
 					menu.getDrinks();
+                                        if (menu.getNumDrinks() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1,menu.getNumDrinks(),"Error! Drink does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -334,6 +345,10 @@ public class RRPSS {
 					break;
 				case 3:
 					menu.getDesserts();
+                                        if (menu.getNumDessert() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1,menu.getNumDessert(),"Error! Dessert does not exist. Please try again");
 					System.out.println("Enter quantity");
@@ -343,6 +358,10 @@ public class RRPSS {
 					break;
 				case 4:
 					menu.getPromotions();
+                                        if (menu.getNumPromotion() == 0){
+                                            System.out.println("No items under this category!");
+                                            break;
+                                        }
 					System.out.println("Which item do you want to add?");
 					userInput = getInput(1, tempPromo.size(),"Error! Promotion does not exist. Please try again");
 					System.out.println("Enter quantity");

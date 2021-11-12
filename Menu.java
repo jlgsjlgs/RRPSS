@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -380,5 +383,43 @@ class Menu {
 
     ArrayList<Promotional> getPromoArrayList(){
         return this.promoMenu;
+    }
+    
+    void outputNewMenuFile(){
+        try {
+            File myFile = new File("MenuItems.txt");
+            if (myFile.createNewFile()){
+                System.out.println("File created: " + myFile.getName());
+            } else {
+                System.out.println("Menu has been updated to the latest version.");
+            }
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+        
+        try {
+            FileWriter myWriter = new FileWriter("MenuItems.txt");
+            
+            for (String itemType : myMenu.keySet()){
+                for (MenuItem curitem : myMenu.get(itemType)){
+                    myWriter.write(itemType);
+                    myWriter.write("\r\n");
+                    myWriter.write(curitem.getName());
+                    myWriter.write("\r\n");
+                    myWriter.write(curitem.getDescription());
+                    myWriter.write("\r\n");
+                    myWriter.write(String.valueOf(curitem.getPrice()));
+                    myWriter.write("\r\n");
+                    myWriter.write("\r\n");
+                }
+            }
+            
+            myWriter.write("END");
+            myWriter.write("\r\n");
+            myWriter.close();
+            
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }   
     }
 }
