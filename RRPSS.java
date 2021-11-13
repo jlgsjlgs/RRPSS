@@ -169,6 +169,7 @@ public class RRPSS {
 					break;
 				case 8:
 					rl.removeInvalids(sm);
+					sm.printTableStatus();
 					System.out.println("Enter No. of pax");
 					System.out.println(getAvailableTable(getInput(1,10)) != -1 ? "Table available" : "No available table");
 					break;
