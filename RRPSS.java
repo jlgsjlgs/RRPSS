@@ -145,7 +145,16 @@ public class RRPSS {
 				case 7:
 					//edit reservation
 					System.out.println("Enter reservation ID: ");
-					long rID = sc.nextLong();
+
+					while (true){
+						try {
+							rID = Long.parseLong(sc.next());
+							break; 
+						} catch (NumberFormatException e){
+							System.out.println("Error! Input is not a valid! Please enter a valid input!");
+						}
+					}
+
 					rl.removeInvalids(sm);
 					if(hasReservation(rID)){
 						Reservation reservation = rl.getReservation(rID);
@@ -197,6 +206,8 @@ public class RRPSS {
 	//reservation
 
 	static void createReservation(String name, int pax) {
+		String memS;
+		long phoneNum;
 
 		Scanner scan = new Scanner(System.in);
 
@@ -208,7 +219,14 @@ public class RRPSS {
 
 			//get additional info
 			System.out.println("Please enter phone number of customer: ");
-			long phoneNum = scan.nextLong();
+			while (true){
+				try {
+					phoneNum = Long.parseLong(scan.nextLine());
+					break; 
+				} catch (NumberFormatException e){
+					System.out.println("Error! Input is not a valid! Please enter a valid input!");
+				}
+			}
 			System.out.println("Is the customer a member? (y/n)");
 			String memS = scan.next(); //y/n
 			boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
@@ -280,7 +298,15 @@ public class RRPSS {
 		//ask for rID
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter reservation ID: ");
-		long rID = scan.nextLong();
+
+		while (true){
+			try {
+				rID = Long.parseLong(scan.next());
+				break; 
+			} catch (NumberFormatException e){
+				System.out.println("Error! Input is not a valid! Please enter a valid input!");
+			}
+		}
 
 		if(hasReservation(rID)){
 			Reservation reservation = rl.getReservation(rID);
