@@ -56,7 +56,7 @@ public class RRPSS {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		roster.showStaff();
-		System.out.println("Identify yourself");
+		System.out.println("Please identify yourself");
                 int holderstaffinput = getInput(1, roster.getRosterSize());
 		Staff staff = roster.getStaff(holderstaffinput-1);
 		System.out.println("Welcome, "+staff.getName()+" ("+staff.getJobTitle()+")");
@@ -134,7 +134,7 @@ public class RRPSS {
 					rl.removeInvalids(sm);
 					System.out.println("Enter customer name");
 					String name = sc.next();
-					System.out.println("Enter pax");
+					System.out.println("Enter pax size");
 					int pax = getInput(1,10);
 					if(getAvailableTable(pax) != -1){
 						createReservation(name,pax);
@@ -144,7 +144,7 @@ public class RRPSS {
 					break;
 				case 7:
 					//edit reservation
-					System.out.println("What's ur reservation ID?");
+					System.out.println("Enter reservation ID: ");
 					long rID = sc.nextLong();
 					rl.removeInvalids(sm);
 					if(hasReservation(rID)){
@@ -157,7 +157,7 @@ public class RRPSS {
 							removeReservation(rID);
 						}
 					}else
-						System.out.println("Your reservation has either expired or does not exist!");
+						System.out.println("Reservation has either expired or does not exist!");
 					break;
 				case 8:
 					rl.removeInvalids(sm);
@@ -207,13 +207,13 @@ public class RRPSS {
 		if(curTableID != -1){
 
 			//get additional info
-			System.out.println("Please enter your phone number: ");
+			System.out.println("Please enter phone number of customer: ");
 			long phoneNum = scan.nextLong();
-			System.out.println("Are you a member? (y/n)");
+			System.out.println("Is the customer a member? (y/n)");
 			String memS = scan.next(); //y/n
 			boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
 
-			System.out.println("Enter date in YYYY-MM-DD format");
+			System.out.println("Enter date of reservation in YYYY-MM-DD format");
 			LocalDate date;
 			LocalTime time;
 			while(true){
@@ -229,7 +229,7 @@ public class RRPSS {
 				}
 			}
 
-			System.out.println("Enter time in HH:MM (24H format)");
+			System.out.println("Enter time of reservation in HH:MM (24H format)");
 			while(true){
 				try {
 					time = LocalTime.parse(scan.next());
@@ -251,7 +251,7 @@ public class RRPSS {
 
 		// else say sorry, no reservation obj created
 		else{
-			System.out.println("No tables with your current pax available atm, try reserving again tomorrow or put ut child at home");
+			System.out.println("No tables available for pax size. Please try again tomorrow.");
 		}
 	}
 
@@ -279,7 +279,7 @@ public class RRPSS {
 
 		//ask for rID
 		Scanner scan = new Scanner(System.in);
-		System.out.println("What's ur reservation ID?");
+		System.out.println("Enter reservation ID: ");
 		long rID = scan.nextLong();
 
 		if(hasReservation(rID)){
