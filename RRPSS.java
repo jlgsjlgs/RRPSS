@@ -23,7 +23,7 @@ public class RRPSS {
 	 * @param max Maximum value
 	 * @return input
 	 */
-	private static int getInput(Integer min,Integer max){
+	static int getInput(Integer min,Integer max){
 		return getInput(min,max,null);
 	}
 
@@ -34,7 +34,7 @@ public class RRPSS {
 	 * @param outOfRangePrompt   Prompt to print if out of range, if null prints "Must be within the range of "+min+" and "+max+", try again"
 	 * @return input
 	 */
-	private static int getInput(Integer min,Integer max,String outOfRangePrompt){
+	static int getInput(Integer min,Integer max,String outOfRangePrompt){
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
 		do {
@@ -54,7 +54,6 @@ public class RRPSS {
 	}
 
 	public static void main(String[] args) {
-		long rID;
 		Scanner sc = new Scanner(System.in);
 		roster.showStaff();
 		System.out.println("Please identify yourself");
@@ -146,14 +145,7 @@ public class RRPSS {
 				case 7:
 					//edit reservation
 					System.out.println("Enter reservation ID: ");
-					while (true){
-						try {
-							rID = Long.parseLong(sc.nextLine());
-							break; 
-						} catch (NumberFormatException e){
-							System.out.println("Error! Input is not a valid! Please enter a valid input!");
-						}
-					}
+					long rID = sc.nextLong();
 					rl.removeInvalids(sm);
 					if(hasReservation(rID)){
 						Reservation reservation = rl.getReservation(rID);
@@ -183,7 +175,7 @@ public class RRPSS {
 						}
 					}
 					if(order == null){
-						System.out.println("Invalid Order ID");
+						System.out.println("Invalid reservation ID");
 						break;
 					}
 					printOrderInvoice(order);
@@ -205,7 +197,7 @@ public class RRPSS {
 	//reservation
 
 	static void createReservation(String name, int pax) {
-		String memS;
+
 		Scanner scan = new Scanner(System.in);
 
 		//check if table available
@@ -218,15 +210,9 @@ public class RRPSS {
 			System.out.println("Please enter phone number of customer: ");
 			long phoneNum = scan.nextLong();
 			System.out.println("Is the customer a member? (y/n)");
+			String memS = scan.next(); //y/n
+			boolean mem = memS.toLowerCase().charAt(0) == 'y' ;
 
-			while (true){
-				memS = scan.next();
-				if (memS.toLowerCase().charAt(0) == 'y' || memS.toLowerCase().charAt(0) == 'n'){
-					break;
-				}
-				System.out.println("Please enter either y or n");
-			}
-			boolean mem = memS.toLowerCase().charAt(0) == 'y';
 			System.out.println("Enter date of reservation in YYYY-MM-DD format");
 			LocalDate date;
 			LocalTime time;
@@ -289,20 +275,12 @@ public class RRPSS {
 
 	static void createOrder(Staff staff) {
 		// check if there's reservation, ie has valid rID, yes-> create order, else deny
-		long rID;
+
 
 		//ask for rID
 		Scanner scan = new Scanner(System.in);
 		System.out.println("Enter reservation ID: ");
-		while (true){
-			try {
-				rID = Long.parseLong(scan.nextLine());
-				break; 
-			} catch (NumberFormatException e){
-				System.out.println("Error! Input is not a valid! Please enter a valid input!");
-			}
-		}
-
+		long rID = scan.nextLong();
 
 		if(hasReservation(rID)){
 			Reservation reservation = rl.getReservation(rID);
