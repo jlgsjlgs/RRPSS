@@ -25,7 +25,7 @@ class MenuItem implements Item{
         return this.name;
     }
     
-    public String getDescription(){
+    String getDescription(){
         return this.description;
     }
     
