@@ -206,6 +206,7 @@ public class RRPSS {
 
 	static void createReservation(String name, int pax) {
 		String memS;
+		long phoneNum;
 		Scanner scan = new Scanner(System.in);
 
 		//check if table available
@@ -216,7 +217,14 @@ public class RRPSS {
 
 			//get additional info
 			System.out.println("Please enter phone number of customer: ");
-			long phoneNum = scan.nextLong();
+			while (true){
+				try {
+					phoneNum = Long.parseLong(sc.nextLine());
+					break; 
+				} catch (NumberFormatException e){
+					System.out.println("Error! Input is not a valid! Please enter a valid input!");
+				}
+			}
 			System.out.println("Is the customer a member? (y/n)");
 
 			while (true){
