@@ -6,7 +6,7 @@ class ReservationList {
 	private static final long REMOVE_AFTER_SECONDS = 60;
 	
 	private final ArrayList<Reservation> resList;
-	private static int NEXT_RID;
+	private static long NEXT_RID;
 	
 	ReservationList(){
 		resList = new ArrayList <Reservation>();
