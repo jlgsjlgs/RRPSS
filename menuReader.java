@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.io.InputStream;
 
-public class menuReader {
+public class MenuReader {
 
     public HashMap<String, ArrayList<MenuItem>> readMenuFile(){
         HashMap<String, ArrayList<MenuItem>> tempMenu = new HashMap<String, ArrayList<MenuItem>>();
