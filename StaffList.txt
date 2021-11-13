@@ -1,11 +1,26 @@
-Spongebob Squarepants
+Brandon Loke
 Male
-Cook
+Manager
 1
 
-Squidward Tentacles
+Jonathan Lim
 Male
 Cashier
 2
+
+Liya
+Female
+Waitress
+3
+
+Janesse Lim
+Female
+Janitor
+4
+
+Sheng Huai
+Male
+Waiter
+5
 
 END
