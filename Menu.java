@@ -4,19 +4,18 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 
 class Menu {
     private HashMap<String, ArrayList<MenuItem>> myMenu;
     private ArrayList<Promotional> promoMenu;
     private menuReader myReader;
-    private menuItemModifier menuMod;
+    private MenuItemModifier menuMod;
     
     Menu(){
     	this.promoMenu = new ArrayList<Promotional>();
         this.myReader = new menuReader();
         this.myMenu = this.myReader.readMenuFile();
-        this.menuMod = new menuItemModifier();
+        this.menuMod = new MenuItemModifier();
     }
 
     void addMenuItem(){
@@ -194,17 +193,14 @@ class Menu {
         System.out.println("How many items would you like in the promotion?");
         int numOfItems = RRPSS.getInput(1,Integer.MAX_VALUE);
 
-//        int numOfItems = sc.nextInt();
         for (int i = 0; i < numOfItems; i++) {
             System.out.println("What type of item do you want to add to the promotion?");
             showItemTypes();
             int userInput = RRPSS.getInput(1,Integer.MAX_VALUE);
-//            int userInput = sc.nextInt();   
             switch (userInput){
             	case 1:
 	            	System.out.println("Which Main item would you like to add?");
 	            	getMains();
-//	            	int itemNumber = sc.nextInt(); 
 	            	int itemNumber = RRPSS.getInput(1,myMenu.get("MainCourse").size());
 	                if (itemNumber < 1 || itemNumber > myMenu.get("MainCourse").size()){
 	                    System.out.println("Invalid item!");
@@ -216,7 +212,6 @@ class Menu {
                	case 2:
 	            	System.out.println("Which Drink item would you like to add?");
 	            	getDrinks();
-//	            	itemNumber = sc.nextInt();  
 	            	itemNumber = RRPSS.getInput(1,myMenu.get("Drink").size());
 	                if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
 	                    System.out.println("Invalid item!");
@@ -228,7 +223,6 @@ class Menu {
              	case 3:
 	            	System.out.println("Which Dessert item would you like to add?");
 	            	getDesserts();
-//	            	itemNumber = sc.nextInt();  
 	            	itemNumber = RRPSS.getInput(1,myMenu.get("Dessert").size());
 	                if (itemNumber < 1 || itemNumber > myMenu.get("Dessert").size()){
 	                    System.out.println("Invalid item!");
@@ -261,7 +255,6 @@ class Menu {
          Scanner sc = new Scanner(System.in);
          System.out.println("Which promotion item do you want to update?");
          getPromotions();
-//         int itemNumber = sc.nextInt(); 
          int itemNumber = RRPSS.getInput(1, promoMenu.size());
          if (itemNumber < 1 || itemNumber > promoMenu.size()){  // Pick promo item to update
              System.out.println("Invalid item!");
@@ -273,7 +266,6 @@ class Menu {
         	 toUpdate.printItems();
         	 System.out.println("Do you want to add or remove items from the promo?");
         	 System.out.println("1. Add\n2. Remove\n3. Exit");
-//        	 int addOrRemove = sc.nextInt();
         	 int addOrRemove = RRPSS.getInput(1,3);
         	 switch (addOrRemove) {
         	 case 1:  // Add
@@ -319,7 +311,6 @@ class Menu {
         	 case 2:  // Remove item from Promo bundle
         		 toUpdate.printItems();
         		 System.out.println("Which item would you like to remove?");
-//        		 int removeItem = sc.nextInt();
         		 int removeItem = RRPSS.getInput(1, toUpdate.getNumOfItems());
         	      if (removeItem < 1 || removeItem > toUpdate.getNumOfItems()){
 	                    System.out.println("Invalid item!");
@@ -354,7 +345,6 @@ class Menu {
         	         System.out.println("Which promotion item do you want to delete?");
         	         getPromotions();
         	         int removeIndex = RRPSS.getInput(1, promoMenu.size());
-//                	 int removeIndex = sc.nextInt();  
                      if (removeIndex < 1 || removeIndex > promoMenu.size()){
                          System.out.println("Invalid item!");
                          return;
@@ -362,7 +352,7 @@ class Menu {
                      promoMenu.remove(removeIndex-1);
     	 		 } while (continueFlag == true);
      }
-                 
+                    
     //DONE
     void getMains(){
         int i = 1;
@@ -408,7 +398,7 @@ class Menu {
         }
     }
     
-    void getPromotions(){ 
+    public void getPromotions(){ 
         if (this.promoMenu.size() == 0){ 
             System.out.println("No promotions found!"); 
         } else { 
