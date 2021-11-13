@@ -8,12 +8,12 @@ import java.util.HashMap;
 class Menu {
     private HashMap<String, ArrayList<MenuItem>> myMenu;
     private ArrayList<Promotional> promoMenu;
-    private menuReader myReader;
+    private MenuReader myReader;
     private MenuItemModifier menuMod;
     
     Menu(){
     	this.promoMenu = new ArrayList<Promotional>();
-        this.myReader = new menuReader();
+        this.myReader = new MenuReader();
         this.myMenu = this.myReader.readMenuFile();
         this.menuMod = new MenuItemModifier();
     }
