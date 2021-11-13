@@ -9,8 +9,8 @@ Gud Soup
 6.5
 
 MainCourse
-TestingItem
-dis better work
+Nasi Lemak
+Coconut Rice, Sambal Chili, Ikan Bilis
 69.0
 
 Drink
@@ -27,5 +27,9 @@ Dessert
 Ice Cream
 The classic
 6.8
+
+Dessert
+Mango Pudding
+Hong Kong's favourite dessert
 
 END
