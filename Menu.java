@@ -8,12 +8,12 @@ import java.util.HashMap;
 class Menu {
     private HashMap<String, ArrayList<MenuItem>> myMenu;
     private ArrayList<Promotional> promoMenu;
-    private MenuReader myReader;
+    private menuReader myReader;
     private MenuItemModifier menuMod;
     
     Menu(){
     	this.promoMenu = new ArrayList<Promotional>();
-        this.myReader = new MenuReader();
+        this.myReader = new menuReader();
         this.myMenu = this.myReader.readMenuFile();
         this.menuMod = new MenuItemModifier();
     }
@@ -271,12 +271,12 @@ class Menu {
         	 case 1:  // Add
         		 System.out.println("What type of item do you want to add to the promotion?");
                  showItemTypes();
-                 int userInput = sc.nextInt();        
+                 int userInput = RRPSS.getInput(1,3);
                  switch (userInput){
                  	case 1:
      	            	System.out.println("Which Main item would you like to add?");
      	            	getMains();
-     	            	itemNumber = sc.nextInt(); 
+     	            	userInput = RRPSS.getInput(1,myMenu.get("MainCourse").size());
      	                if (itemNumber < 1 || itemNumber > myMenu.get("MainCourse").size()){
      	                    System.out.println("Invalid item!");
      	                    break;
@@ -286,7 +286,7 @@ class Menu {
                     case 2:
                         System.out.println("Which Drink item would you like to add?");
                         getDrinks();
-                        itemNumber = sc.nextInt();  
+     	            	userInput = RRPSS.getInput(1,myMenu.get("Drink").size());
                         if (itemNumber < 1 || itemNumber > myMenu.get("Drink").size()){
                             System.out.println("Invalid item!");
                             break;
@@ -296,7 +296,7 @@ class Menu {
                   	case 3:
      	            	System.out.println("Which Dessert item would you like to add?");
      	            	getDesserts();
-     	            	itemNumber = sc.nextInt();  
+     	            	userInput = RRPSS.getInput(1,myMenu.get("Dessert").size());
      	                if (itemNumber < 1 || itemNumber > myMenu.get("Dessert").size()){
      	                    System.out.println("Invalid item!");
      	                    break;
