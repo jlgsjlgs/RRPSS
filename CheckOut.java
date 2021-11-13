@@ -27,5 +27,6 @@ class CheckOut {
 
 		rl.removeReservation(myOrder.getOrderID());
 		sm.unassignTable(myOrder.getTableID());
+		System.out.println("Table " + myOrder.getTableID() + " is set to EMPTY.");
 	}
 }
