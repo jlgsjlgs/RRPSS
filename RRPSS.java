@@ -183,7 +183,7 @@ public class RRPSS {
 						}
 					}
 					if(order == null){
-						System.out.println("Invalid Order ID");
+						System.out.println("Invalid reservation ID");
 						break;
 					}
 					printOrderInvoice(order);
