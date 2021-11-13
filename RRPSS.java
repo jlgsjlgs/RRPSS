@@ -148,7 +148,7 @@ public class RRPSS {
 					System.out.println("Enter reservation ID: ");
 					while (true){
 						try {
-							rID = Long.parseLong(sc.nextLine());
+							rID = Long.parseLong(sc.next());
 							break; 
 						} catch (NumberFormatException e){
 							System.out.println("Error! Input is not a valid! Please enter a valid input!");
@@ -304,7 +304,7 @@ public class RRPSS {
 		System.out.println("Enter reservation ID: ");
 		while (true){
 			try {
-				rID = Long.parseLong(scan.nextLine());
+				rID = Long.parseLong(scan.next());
 				break; 
 			} catch (NumberFormatException e){
 				System.out.println("Error! Input is not a valid! Please enter a valid input!");
