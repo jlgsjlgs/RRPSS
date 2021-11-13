@@ -52,4 +52,10 @@ class SeatingManagement {
 	Table getTable(int tID){
 		return myTables.get(tID-1);
 	}
+	
+	void printTableStatus(){
+		for (Table tempTable : myTables){
+			System.out.println("Table " + tempTable.getTableID() + " of size " + tempTable.getNumOfSeats() + ", Status: " + tempTable.getStatus());
+		}
+	}
 }
