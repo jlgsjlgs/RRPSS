@@ -13,8 +13,7 @@ class StaffRoster {
 	}
 
 void bootup(){
-    ReadFile StaffList = new ReadFile("StaffList.txt");
-    Scanner filescanner = new Scanner(System.in);
+    StaffReader StaffList = new StaffReader("StaffList.txt");
     try (Scanner filescan = new Scanner(StaffList.getIS())) {
         ArrayList<String> fileLines = new ArrayList<>();
         
