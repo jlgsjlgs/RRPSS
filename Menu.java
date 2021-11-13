@@ -9,13 +9,13 @@ class Menu {
     private HashMap<String, ArrayList<MenuItem>> myMenu;
     private ArrayList<Promotional> promoMenu;
     private menuReader myReader;
-    private menuItemModifier menuMod;
+    private MenuItemModifier menuMod;
     
     Menu(){
     	this.promoMenu = new ArrayList<Promotional>();
         this.myReader = new menuReader();
         this.myMenu = this.myReader.readMenuFile();
-        this.menuMod = new menuItemModifier();
+        this.menuMod = new MenuItemModifier();
     }
 
     void addMenuItem(){
