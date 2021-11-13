@@ -23,7 +23,7 @@ public class RRPSS {
 	 * @param max Maximum value
 	 * @return input
 	 */
-	private static int getInput(Integer min,Integer max){
+	static int getInput(Integer min,Integer max){
 		return getInput(min,max,null);
 	}
 
@@ -34,7 +34,7 @@ public class RRPSS {
 	 * @param outOfRangePrompt   Prompt to print if out of range, if null prints "Must be within the range of "+min+" and "+max+", try again"
 	 * @return input
 	 */
-	private static int getInput(Integer min,Integer max,String outOfRangePrompt){
+	static int getInput(Integer min,Integer max,String outOfRangePrompt){
 		Scanner scanner = new Scanner(System.in);
 		int choice = 0;
 		do {
