@@ -42,6 +42,8 @@ public class RRPSS {
 				choice = scanner.nextInt();
 			}catch (InputMismatchException e){
 				System.out.println("Invalid number, try again");
+				scanner = new Scanner(System.in);// why infinite loop without this??
+				continue;
 			}
 			if(choice < min || choice > max){
 				System.out.println(outOfRangePrompt == null ? "Must be within the range of "+min+" and "+max+", try again" : outOfRangePrompt);
@@ -286,6 +288,7 @@ public class RRPSS {
 			orders.add(new Order(rID, staff, table, reservation.getMembership()));//is int or long? rID is long but orderID is int
 			sm.assignTable(table);
 			reservation.settID(table);
+			System.out.println("Order created, table no. "+table+" assigned");
 		} else {
 			System.out.println("Your reservation has either expired or does not exist!");
 		}
