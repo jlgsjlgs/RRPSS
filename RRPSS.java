@@ -219,7 +219,7 @@ public class RRPSS {
 			System.out.println("Please enter phone number of customer: ");
 			while (true){
 				try {
-					phoneNum = Long.parseLong(sc.nextLine());
+					phoneNum = Long.parseLong(scan.nextLine());
 					break; 
 				} catch (NumberFormatException e){
 					System.out.println("Error! Input is not a valid! Please enter a valid input!");
