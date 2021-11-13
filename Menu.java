@@ -26,7 +26,7 @@ class Menu {
         boolean flag = true;
         Scanner sc = new Scanner(System.in);
         int i=1;
-        int itemNum;
+        int itemNum, itemType;
         String holder = "";
         System.out.println("What type of item do you want to modify?");
 
@@ -34,18 +34,41 @@ class Menu {
             System.out.println(i + ". " + temp);
             i++;
         }
-        int itemType = Integer.valueOf(sc.nextLine());
+
+        while (true){
+            try {
+                itemType = Integer.parseInt(sc.nextLine());
+                break; 
+            } catch (NumberFormatException e){
+                System.out.println("Error! Input is not a valid! Please enter a valid input!");
+            }
+        }
 
         switch (itemType){
             case 1:
+                if (getNumMains() == 0){
+                    flag = false;
+                    System.out.println("No such items to to update!");
+                    break;
+                }
                 getMains();
                 holder = "MainCourse";
                 break;
             case 2:
+                if (getNumDrinks() == 0){
+                    flag = false;
+                    System.out.println("No such items to to update!");
+                    break;
+                }
                 getDrinks();
                 holder = "Drink";
                 break;
             case 3:
+                if (getNumDessert() == 0){
+                    flag = false;
+                    System.out.println("No such items to to update!");
+                    break;
+                }
                 getDesserts();
                 holder = "Dessert";
                 break;
@@ -57,7 +80,14 @@ class Menu {
 
         if (flag == true){
             System.out.println("Which item do you want to modify?");
-            itemNum = Integer.valueOf(sc.nextLine());
+            while (true){
+                try {
+                    itemNum = Integer.parseInt(sc.nextLine());
+                    break; 
+                } catch (NumberFormatException e){
+                    System.out.println("Error! Input is not a valid! Please enter a valid input!");
+                }
+            }
 
             if (itemNum > myMenu.get(holder).size() || itemNum <= 0){
                 System.out.println("Error! Invalid item was chosen!");
@@ -71,7 +101,7 @@ class Menu {
         boolean flag = true;
         Scanner sc = new Scanner(System.in);
         int i=1;
-        int itemNum;
+        int itemNum, itemType;
         String holder = "";
 
         System.out.println("What type of item do you want to delete?");
@@ -79,33 +109,63 @@ class Menu {
             System.out.println(i + ". " + temp);
             i++;
         }
-        int itemType = Integer.valueOf(sc.nextLine());
+
+        while (true){
+            try {
+                itemType = Integer.parseInt(sc.nextLine());
+                break; 
+            } catch (NumberFormatException e){
+                System.out.println("Error! Input is not a valid! Please enter a valid input!");
+            }
+        }
 
         switch (itemType){
             case 1:
+                if (getNumMains() == 0){
+                    flag = false;
+                    System.out.println("No such items to to remove!");
+                    break;
+                }
                 getMains();
                 holder = "MainCourse";
                 break;
             case 2:
+                if (getNumDrinks() == 0){
+                    flag = false;
+                    System.out.println("No such items to to remove!");
+                    break;
+                }
                 getDrinks();
                 holder = "Drink";
                 break;
             case 3:
+                if (getNumDessert() == 0){
+                    flag = false;
+                    System.out.println("No such items to to remove!");
+                    break;
+                }
                 getDesserts();
                 holder = "Dessert";
                 break;
             default:
-                System.out.println("Error!");
+                System.out.println("Error! Invalid type of item chosen!");
                 flag = false;
                 break;
         }
 
         if (flag == true){
             System.out.println("Which item do you want to delete?");
-            itemNum = Integer.valueOf(sc.nextLine());
+            while (true){
+                try {
+                    itemNum = Integer.parseInt(sc.nextLine());
+                    break; 
+                } catch (NumberFormatException e){
+                    System.out.println("Error! Input is not a valid! Please enter a valid input!");
+                }
+            }
 
             if (itemNum > myMenu.get(holder).size() || itemNum <= 0){
-                System.out.println("Error!");
+                System.out.println("Error! Invalid item was chosen!");
             } else {
                 this.menuMod.deleteMenuItem(this.myMenu, holder, itemNum);
                 System.out.println("After update,");

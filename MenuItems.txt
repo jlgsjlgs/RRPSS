@@ -23,4 +23,9 @@ Ice Chocolate
 Pretty good
 4.2
 
+Dessert
+Ice Cream
+The classic
+6.8
+
 END

@@ -21,13 +21,13 @@ class ReservationList {
 		Reservation tempReservation = new Reservation(name, pax, phoneNum, resDate, resTime, mem, NEXT_RID, tID);
 		resList.add(tempReservation);
 
-		System.out.println("Please note, your reservation ID is : " + NEXT_RID);
+		System.out.println("Please note, reservation ID assigned is : " + NEXT_RID);
 		NEXT_RID++;	
 	}
 
 	void removeReservation(long rID) {
 		if (resList.removeIf(res -> (res.getrID() == rID))){
-			System.out.println("Your reservation, reservationID =  " + rID+ ", is successfully removed");
+			System.out.println("Reservation, reservationID =  " + rID+ ", is successfully removed");
 		} else
 			System.out.println("Error in removing reservation. No such reservation");
 	}

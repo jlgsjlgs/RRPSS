@@ -7,9 +7,10 @@ public class menuItemModifier {
     
     public void addMenuItem(HashMap<String, ArrayList<MenuItem>> Menu){
         Scanner sc = new Scanner(System.in);
-        ArrayList temparray;
         int i=1;
         boolean flag = true;
+        double itemPrice;
+        Integer userInput;
 
         for (String itemname: Menu.keySet()){
             System.out.println(i + ". " + itemname);
@@ -17,26 +18,42 @@ public class menuItemModifier {
         }
 
         System.out.println("What type of item do you want to add?");
-        Integer userInput = Integer.valueOf(sc.nextLine());
+        while (true){
+            try {
+                userInput = Integer.parseInt(sc.nextLine());
+                break; 
+            } catch (NumberFormatException e){
+                System.out.println("Error! Input is not a valid! Please enter a valid input!");
+            }
+        }
+
         System.out.println("Item name: ");
         String itemName = sc.nextLine();
         System.out.println("Item description:");
         String itemDescription = sc.nextLine();
         System.out.println("Item price:");
-        double itemPrice = Double.valueOf(sc.nextLine());
+        
+        while (true){
+            try {
+                itemPrice = Double.parseDouble(sc.nextLine());
+                break; 
+            } catch (NumberFormatException e){
+                System.out.println("Error! Input is not a valid price! Please enter a valid price!");
+            }
+        }
 
         switch (userInput){
             case 1:
                 Menu.get("MainCourse").add(new MainCourse(itemName, itemDescription, itemPrice));
                 break;
             case 2:
-                Menu.get("Drink").add(new MainCourse(itemName, itemDescription, itemPrice));
+                Menu.get("Drink").add(new Drink(itemName, itemDescription, itemPrice));
                 break;
             case 3:
-                Menu.get("Dessert").add(new MainCourse(itemName, itemDescription, itemPrice));
+                Menu.get("Dessert").add(new Dessert(itemName, itemDescription, itemPrice));
                 break;
             default:
-                System.out.println("Item type does not exist!");
+                System.out.println("Item type does not exist! Please choose within the range of available item types.");
                 flag = false;
                 break;
         }
@@ -48,13 +65,20 @@ public class menuItemModifier {
 
     public void updateMenuItem(HashMap<String, ArrayList<MenuItem>> Menu, String itemType, int itemNum){
         Scanner sc = new Scanner(System.in);
-        ArrayList temparray;
+        int userInput;
         
         System.out.println("What do you want to change?");
         System.out.println("1. Name");
         System.out.println("2. Description");
         System.out.println("3. Price");
-        int userInput = Integer.valueOf(sc.nextLine());
+        while (true){
+            try {
+                userInput = Integer.parseInt(sc.nextLine());
+                break; 
+            } catch (NumberFormatException e){
+                System.out.println("Error! Input is not a valid! Please enter a valid input!");
+            }
+        }
 
         MenuItem toChange = Menu.get(itemType).get(itemNum-1);
         
